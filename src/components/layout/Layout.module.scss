@@ -1,0 +1,53 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+}
+
+.haeder {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 1rem 3rem;
+  border-bottom: 1px solid #f3f3f3;
+  box-shadow: 0px 2px 5px #f3f3f3;
+}
+
+.containerImg {
+  flex-grow: 1;
+}
+
+.img {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+}
+
+.link {
+  color: #000;
+  cursor: pointer;
+
+  &:hover {
+    color: grey;
+  }
+
+  &:focus {
+    color: blue;
+  }
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-grow: 1;
+  gap: 30px;
+}
+
+.main {
+  padding: 20px;
+}
+
+.active {
+  color:red
+}
