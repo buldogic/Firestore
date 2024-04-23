@@ -1,0 +1,40 @@
+@import '../../../styles/styles.css';
+
+.button {
+  height: 52px;
+  background: #518581;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+  color: #ffffff;
+  padding: 0px 20px;
+  transition: 0.2s ease-out opacity, 0.2s ease-out background-color;
+
+  &:hover:not(:disabled):not(.loading) {
+    background-color: #86aaa7;
+  }
+
+  &:active:not(:disabled) {
+    background-color: #487773;
+  }
+
+  &.disabled {
+    background-color: #d9d9d9;
+  }
+}
+
+// .button:disabled:not(.loading) {
+//   background-color: #d9d9d9;
+// }
+
+.loader {
+  color: inherit;
+  margin-right: 8px;
+}

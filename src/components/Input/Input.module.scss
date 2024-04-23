@@ -1,0 +1,36 @@
+@import '../../../styles/styles.css';
+
+.root {
+  height: 52px;
+  background-color: #ffffff;
+  padding: 16px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &.focus {
+    outline: none;
+    background: #ffffff;
+    border: 1px solid #518581;
+  }
+  &.disabled {
+    color: #afadb5;
+  }
+}
+
+.input {
+  background: #ffffff;
+  width: 100%;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #000000;
+}
+
+.icon {
+  display: none;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+}

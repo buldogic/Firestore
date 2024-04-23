@@ -1,0 +1,46 @@
+// @import '../../styles/styles.css';
+
+.root {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  color: rgb(81, 133, 129);
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    background-color: #ffffff;
+    border: 1px solid #518581;
+  }
+
+  &.disabled {
+    color: rgba(#000, 0.2);
+    background-color: rgba(#fff, 0.5);
+    border-color: transparent;
+  }
+  &.disabled:hover {
+    color: rgba(#000, 0.2);
+    background-color: rgba(#fff, 0.5);
+    border-color: transparent;
+  }
+}
+.input {
+  display: none;
+}
+
+.icon {
+  display: none;
+  width: 40px;
+  height: 40px;
+  color: inherit;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+}
+
+.input:checked + .icon {
+  display: block;
+}

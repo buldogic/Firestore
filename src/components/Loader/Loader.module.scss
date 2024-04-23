@@ -1,0 +1,19 @@
+.loader {
+  box-sizing: border-box;
+  color: #518581;
+
+  &.s {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.m {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.l {
+    width: 60px;
+    height: 60px;
+  }
+}
