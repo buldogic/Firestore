@@ -5,7 +5,7 @@ export type FieldType = {
 };
 
 export type City = {
-  id: string;
+  id: number;
   name: string;
   is_capital: boolean;
   description: string;

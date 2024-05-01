@@ -6,6 +6,9 @@ import styles from './CityPage.module.scss';
 import { observer } from 'mobx-react-lite';
 import { cities } from 'store/CityDataStore';
 import { Meta } from 'utils/meta';
+import { z } from 'zod';
+
+const idSchema = z.number().int().positive()
 
 const CityPage = () => {
   const { id } = useParams();
@@ -13,8 +16,9 @@ const CityPage = () => {
   const goBack = () => navigate(-1);
 
   useEffect(() => {
-    if (id) {
-      cities.getCity(id);
+    const parsedId = idSchema.safeParse(id) 
+    if (parsedId.success) {
+      cities.getCity(parsedId.data);
     }
   }, []);
 

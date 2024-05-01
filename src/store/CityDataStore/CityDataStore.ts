@@ -3,7 +3,6 @@ import {
   collection,
   doc,
   getCountFromServer,
-  getDoc,
   getDocs,
   getFirestore,
   limit,
@@ -11,7 +10,7 @@ import {
   query,
   setDoc,
   startAfter,
-  startAt,
+  where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { City } from 'utils/fieldType';
@@ -84,14 +83,11 @@ export default class CityDataStore {
     const citiesCol = collection(db, 'cities');
     const snapshot = await getCountFromServer(citiesCol);
     this.count = snapshot.data().count;
-
-    console.log('page * this.LIMIT', page * this.LIMIT);
-
     const citySnapshot = await getDocs(
       query(citiesCol, orderBy('id'), limit(this.LIMIT), startAfter(page * this.LIMIT)),
     );
     const response = citySnapshot.docs.map((doc) => {
-      return { id: doc.id, ...doc.data() };
+      return doc.data();
     });
     if (response.length !== 0) {
       runInAction(() => {
@@ -102,17 +98,17 @@ export default class CityDataStore {
     }
   };
 
-  getCity = async (id: string) => {
+  getCity = async (id: number) => {
     this._meta = Meta.loading;
     this._city = [];
 
     const db = getFirestore(app);
-    const docRef = doc(db, 'cities', id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
+    const docRef = query(collection(db, 'cities'), where('id', '==', id), limit(1));
+    const docSnap = await getDocs(docRef);
+    if (docSnap.docs[0].exists()) {
       runInAction(() => {
         this._meta = Meta.success;
-        this._city = docSnap.data();
+        this._city = docSnap.docs[0].data();
       });
     } else {
       runInAction(() => {

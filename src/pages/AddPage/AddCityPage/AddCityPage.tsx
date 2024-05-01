@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Button, Checkbox, Form, FormProps, Input, InputNumber } from 'antd';
-import { cities } from 'store/CityDataStore';
 import { FieldType } from 'utils/fieldType';
 import z from 'zod';
 import { Meta } from 'utils/meta';
-
 import styles from './AddCityPage.module.scss';
+import { adminCityStore } from './AdminCityStore';
 
 const shemeCity = z.object({
   country: z.string(),
@@ -47,12 +46,10 @@ const AddCityPage = () => {
   const [notification, setNotification] = useState<undefined | string>(undefined);
 
   const onFinish = async (values: unknown) => {
-    console.log('values', values);
     const result = shemeCity.safeParse(values);
     if (!result.success) return;
-    const id: string = result.data.name.substr(0, 3).toUpperCase();
-    await cities.setCity({ id: id, ...result.data });
-    if (cities.meta === Meta.success) {
+    await adminCityStore.createCity(result.data);
+    if (adminCityStore.meta === Meta.success) {
       setNotification('Город успешно добавлен!');
       form.resetFields();
       setTimeout(() => {
