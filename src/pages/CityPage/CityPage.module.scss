@@ -1,14 +1,37 @@
+@import '../../../styles/colorMixin.scss';
 .root {
-  padding: 2rem;
-}
-.card {
-  border: 1px solid rgb(192, 190, 190);
-  border-radius: 10px;
-}
-.cardBlock {
-  margin-bottom: 20px;
+  padding: 2rem 3rem;
 }
 
-.text {
-  margin-bottom: 2rem;
+.containerButton {
+  margin-bottom: 32px;
 }
+
+.containerContent{
+  display: flex;
+  gap: 48px
+}
+.contentImg {
+  width: 600px;
+  height: 500px;
+  
+}
+
+.img{ 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.contentText {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  gap:24px;
+}
+
+.textName {
+  font-size: 44px;
+  font-weight: 400;
+}
+
+

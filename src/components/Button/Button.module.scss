@@ -1,38 +1,37 @@
-@import '../../../styles/styles.css';
+@import '../../../styles//colorMixin.scss';
+
 
 .button {
   height: 52px;
-  background: #518581;
+  background: $primary;
   display: flex;
   align-items: center;
   cursor: pointer;
   border: none;
+  border-radius: 15px;
 
   font-style: normal;
   font-weight: 400;
   font-size: 18px;
   line-height: 18px;
   text-align: center;
-  color: #ffffff;
+  color: $white;
   padding: 0px 20px;
   transition: 0.2s ease-out opacity, 0.2s ease-out background-color;
 
   &:hover:not(:disabled):not(.loading) {
-    background-color: #86aaa7;
+    background-color: $primary-hover;
   }
 
   &:active:not(:disabled) {
-    background-color: #487773;
+    background-color: $primary-active;
   }
 
   &.disabled {
-    background-color: #d9d9d9;
+    background-color: $primary-disabled;
   }
 }
 
-// .button:disabled:not(.loading) {
-//   background-color: #d9d9d9;
-// }
 
 .loader {
   color: inherit;

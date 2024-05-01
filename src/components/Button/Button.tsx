@@ -8,13 +8,13 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   /** Текст кнопки */
   children: React.ReactNode;
+
 };
 
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const { loading, children, disabled, className, ...buttonProps } = props;
 
   return (
-    <div >
       <button
         {...buttonProps}
         disabled={disabled || loading}
@@ -28,7 +28,6 @@ const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
         {loading && <Loader size={'s'} className={styles.loader} />}
         {children}
       </button>
-    </div>
   );
 };
 

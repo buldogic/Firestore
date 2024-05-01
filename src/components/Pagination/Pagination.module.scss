@@ -1,0 +1,21 @@
+@import "../../../styles/colorMixin.scss";
+.root {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  
+}
+
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.active {
+  background-color: $white;
+  color: $primary;
+  &:hover:not(:disabled):not(:disabled) {
+    background-color: $white;
+  }
+}

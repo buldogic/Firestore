@@ -36,7 +36,10 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
 
   return (
     <div className={cn(className, styles.Card)} onClick={onClick}>
-      <img src={image} alt="Card" />
+      <div className={styles.cardImg}>
+
+      <img className={styles.img} src={image} alt="Card" />
+      </div>
       <div className={styles.CardContent}>
         {captionSlot && (
           <Text

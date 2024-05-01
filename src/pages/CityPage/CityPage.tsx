@@ -1,62 +1,54 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getCities } from '../../firebase';
-import Card from 'components/Card';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 import Loader from 'components/Loader';
 import Button from 'components/Button';
 import styles from './CityPage.module.scss';
+import { observer } from 'mobx-react-lite';
+import { cities } from 'store/CityDataStore';
+import { Meta } from 'utils/meta';
 
 const CityPage = () => {
   const { id } = useParams();
-  const [isLoading, setIsloading] = useState(true);
-  const [state, setstate] = useState<any>([]);
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
 
   useEffect(() => {
-    const a = new Promise((res, rej) => {
-      res(getCities());
-    });
-
-    a.then((v: [] | any) => {
-      setstate(v);
-      setIsloading(false);
-    });
+    if (id) {
+      cities.getCity(id);
+    }
   }, []);
-
-  const city = state.find((c: any) => c.name === id);
 
   return (
     <div className={styles.root}>
-      <div>
+      <div className={styles.containerButton}>
         <Button onClick={goBack}> &lt; Назад </Button>
       </div>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div>
-          <div className={styles.text}>
-            <h2>City Page</h2>
-          </div>
-          {id === undefined ? (
-            state.map((c: any) => (
-              <div className={styles.cardBlock} key={c.name}>
-                <Link to={`${c.name}`}>
-                  <Card className={styles.card} title={c.name} subtitle={c.population} />
-                </Link>
-              </div>
-            ))
-          ) : (
-            <div>
-              <p>name:{city.name}</p>
-              {city.is_capital ? <p>Capital</p> : ''}
-              <p>population{city.population}</p>
-            </div>
-          )}
+      {cities.meta === Meta.loading && <Loader />}
+      <div className={styles.containerContent}>
+        <div className={styles.contentImg}>
+          <img className={styles.img} src={cities.city.img} alt="foto" />
         </div>
-      )}
+        <div className={styles.contentText}>
+          <p className={styles.textName}>{cities.city.name}</p>
+          <div>
+            <p>
+              <b>Столица:</b> {cities.city.is_capital ? 'Да' : 'Нет'}
+            </p>
+            <p>
+              <b>Описание :</b> <span className={styles.textDes}>{cities.city.description}</span>
+            </p>
+            <p>
+              <b>Население :</b> {cities.city.population}
+            </p>
+            <p>
+              <b>Достопримечательности :</b> {cities.city.singht ?? 'Список пуст'}
+            </p>
+          </div>
+            <Button>Посетить</Button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default CityPage;
+export default observer(CityPage);
