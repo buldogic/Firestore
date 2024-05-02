@@ -12,8 +12,8 @@ export const useIsCapital = () => {
   const isCapital = useMemo(() => {
     const serializedPage = (searchParams.get(KEY) ?? 'false') !== 'false';
     const capital = schema.safeParse(serializedPage);
-      if (capital.success) return capital.data;
-    return  false;
+    if (capital.success) return capital.data;
+    return false;
   }, [searchParams]);
 
   const setIsCapital = useCallback(

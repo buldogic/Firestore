@@ -1,4 +1,3 @@
-import { Option } from 'components/MultiDropdown';
 import {
   DocumentData,
   collection,
@@ -43,7 +42,6 @@ export default class CityDataStore {
       city: computed,
       getCities: action,
       getCity: action,
-      setCity: action,
       setSearchQuery: action,
       setCapitalFilter: action,
     });
@@ -51,15 +49,6 @@ export default class CityDataStore {
 
   get cities() {
     return this._cities;
-    const filteredCities = this._cities.filter((c) => {
-      if (c.name === undefined) return;
-      return c.name.trim().toLowerCase().startsWith(this.query.trim().toLowerCase());
-    });
-
-    if (!this.isCapital) return filteredCities;
-    return filteredCities.filter((c) => {
-      return c.is_capital === this.isCapital;
-    });
   }
 
   get meta() {
@@ -135,7 +124,6 @@ export default class CityDataStore {
     }
   };
 
-
   getCity = async (id: number) => {
     this._meta = Meta.loading;
     this._city = [];
@@ -152,20 +140,6 @@ export default class CityDataStore {
       runInAction(() => {
         this._meta = Meta.error;
       });
-    }
-  };
-
-  setCity = async (city: City) => {
-    this._meta = Meta.loading;
-
-    const db = getFirestore(app);
-
-    try {
-      await setDoc(doc(db, 'cities', `${city.id}`), { ...city });
-      this._meta = Meta.success;
-    } catch (error) {
-      this._meta = Meta.error;
-      console.error('Ошибка при добавлении города в базу данных Firestore:', error);
     }
   };
 }

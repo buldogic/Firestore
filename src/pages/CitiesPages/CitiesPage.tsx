@@ -30,7 +30,6 @@ const CitiesPages = () => {
     countries.getCountries();
   }, [page, countryIds, isCapital, search]);
 
-
   return (
     <div className={styles.container}>
       <div className={styles.containerHeader}>

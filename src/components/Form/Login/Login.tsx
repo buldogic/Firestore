@@ -1,6 +1,6 @@
 import FormAuth from 'components/Form';
 import styles from './Login.module.scss';
-import {  NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { authStore } from 'store/AuthStore';
 
@@ -14,7 +14,9 @@ const Login = () => {
         <FormAuth onSubmit={authStore.handleLogin} />
       </div>
       <p>
-         <NavLink className={styles.link} to="/register">Регистрация</NavLink>
+        <NavLink className={styles.link} to="/register">
+          Регистрация
+        </NavLink>
       </p>
     </div>
   );

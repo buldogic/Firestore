@@ -1,10 +1,5 @@
-
 const AddTour = () => {
-  return (
-    <div>
-      Add Tour
-    </div>
-  )
-}
+  return <div>Add Tour</div>;
+};
 
-export default AddTour
+export default AddTour;

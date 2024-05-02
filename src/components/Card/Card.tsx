@@ -23,47 +23,24 @@ export type CardProps = {
 };
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
-  const {
-    className,
-    image,
-    captionSlot,
-    title,
-    subtitle,
-    contentSlot,
-    onClick,
-    actionSlot,
-  } = props;
+  const { className, image, captionSlot, title, subtitle, contentSlot, onClick, actionSlot } = props;
 
   return (
     <div className={cn(className, styles.Card)} onClick={onClick}>
       <div className={styles.cardImg}>
-
-      <img className={styles.img} src={image} alt="Card" />
+        <img className={styles.img} src={image} alt="Card" />
       </div>
       <div className={styles.CardContent}>
         {captionSlot && (
-          <Text
-            color={'secondary'}
-            weight={'medium'}
-            view={'p-14'}
-          >
+          <Text color={'secondary'} weight={'medium'} view={'p-14'}>
             {captionSlot}
           </Text>
         )}
-        <Text
-          maxLines={2}
-          view={'p-20'}
-          weight={'normal'}
-        >
+        <Text maxLines={2} view={'p-20'} weight={'normal'}>
           {title}
         </Text>
 
-        <Text
-          maxLines={3}
-          view={'p-16'}
-          weight={'normal'}
-          color={'secondary'}
-        >
+        <Text maxLines={3} view={'p-16'} weight={'normal'} color={'secondary'}>
           {subtitle}
         </Text>
         <div className={styles.CardActions}>
@@ -72,11 +49,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
               {contentSlot}
             </Text>
           )}
-          {actionSlot && (
-            <Text  view={'button'}>
-              {actionSlot}
-            </Text>
-          )}
+          {actionSlot && <Text view={'button'}>{actionSlot}</Text>}
         </div>
       </div>
     </div>

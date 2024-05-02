@@ -1,6 +1,7 @@
 .loader {
   box-sizing: border-box;
   color: #518581;
+  animation: rotation 1s linear infinite;
 
   &.s {
     width: 24px;
@@ -15,5 +16,14 @@
   &.l {
     width: 60px;
     height: 60px;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

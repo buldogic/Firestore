@@ -12,9 +12,13 @@ const SungUp = () => {
       <div className={styles.form}>
         <FormAuth onSubmit={authStore.handleRigister} />
       </div>
-        <div>
-        У вас уже есть аккаунт? <NavLink className={styles.link} to="/login"> Войти</NavLink>
-        </div>
+      <div>
+        У вас уже есть аккаунт?{' '}
+        <NavLink className={styles.link} to="/login">
+          {' '}
+          Войти
+        </NavLink>
+      </div>
     </div>
   );
 };

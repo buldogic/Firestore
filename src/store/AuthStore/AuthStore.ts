@@ -23,10 +23,9 @@ class AuthStore {
       handleLogin: action,
       handleRigister: action,
       user: computed,
-      
     });
 
-    const auth = getAuth()
+    const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       runInAction(() => {
         if (user) {

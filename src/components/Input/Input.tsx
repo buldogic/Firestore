@@ -17,8 +17,6 @@ const Input = (props: InputProps) => {
 
   const [isFocused, setIsFocused] = useState(false);
 
-
-
   return (
     <div className={cn(className, styles.root, disabled && styles.disabled, isFocused && styles.focus)}>
       <input
