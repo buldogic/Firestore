@@ -1,7 +1,11 @@
 @import "../../../styles/colorMixin.scss";
 
 .container {
-  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+
+  padding: 4rem;
   color: $black;
   background-color: $layout;
 }
@@ -11,11 +15,13 @@
   height: 100%;
   flex-wrap: wrap;
   gap: 30px;
+  justify-content: start;
 }
 
 .containerCardText {
   display: block;
   width: 100%;
+  padding: 0 1rem;
 }
 
 .card {
@@ -44,6 +50,7 @@
 }
 
 .containerHeader {
+  padding: 0 1rem;
   margin-bottom: 30px;
 }
 
@@ -51,6 +58,7 @@
   flex-grow: 1;
   border-radius: 10px;
   box-shadow: 0px 0px 5px $border;
+  z-index: 1;
 }
 
 .button {
@@ -58,8 +66,9 @@
 }
 
 .loading {
-  height: 100%;
+  width: 100%;
   display: flex;
+  padding-top: 8rem;
   justify-content: center;
   align-items: center;
 }
@@ -68,4 +77,5 @@
   display: flex;
   justify-content: center;
   margin-top: 48px;
+  flex-grow: 1;
 }

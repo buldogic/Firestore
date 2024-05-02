@@ -1,3 +1,4 @@
+import { Option } from 'components/MultiDropdown';
 import {
   DocumentData,
   collection,
@@ -44,10 +45,12 @@ export default class CityDataStore {
       getCity: action,
       setCity: action,
       setSearchQuery: action,
+      setCapitalFilter: action,
     });
   }
 
   get cities() {
+    return this._cities;
     const filteredCities = this._cities.filter((c) => {
       if (c.name === undefined) return;
       return c.name.trim().toLowerCase().startsWith(this.query.trim().toLowerCase());
@@ -75,17 +78,51 @@ export default class CityDataStore {
     this.isCapital = v;
   };
 
-  getCities = async (page: number) => {
+  getCities = async (args: { page: number; countryIds: number[]; isCapital: boolean; search: string }) => {
     this._meta = Meta.loading;
     this._cities = [];
 
     const db = getFirestore(app);
     const citiesCol = collection(db, 'cities');
-    const snapshot = await getCountFromServer(citiesCol);
-    this.count = snapshot.data().count;
-    const citySnapshot = await getDocs(
-      query(citiesCol, orderBy('id'), limit(this.LIMIT), startAfter(page * this.LIMIT)),
-    );
+    const countQuery = [citiesCol];
+
+    if (args.countryIds.length) {
+      // @ts-ignore
+      countQuery.push(where('countryId', 'in', args.countryIds));
+    }
+
+    if (args.isCapital) {
+      // @ts-ignore
+      countQuery.push(where('is_capital', '==', args.isCapital));
+    }
+
+    if (args.search.length) {
+      // @ts-ignore
+      countQuery.push(where('name', '==', args.search));
+    }
+    // @ts-ignore
+    const snapshot = await getCountFromServer(query(...countQuery));
+    runInAction(() => {
+      this.count = snapshot.data().count;
+    });
+
+    const queryArgs = [citiesCol, orderBy('id'), limit(this.LIMIT), startAfter(args.page * this.LIMIT)];
+    if (args.countryIds.length) {
+      // @ts-ignore
+      queryArgs.push(where('countryId', 'in', args.countryIds));
+    }
+
+    if (args.isCapital) {
+      // @ts-ignore
+      queryArgs.push(where('is_capital', '==', args.isCapital));
+    }
+
+    if (args.search.length) {
+      // @ts-ignore
+      queryArgs.push(where('name', '==', args.search));
+    }
+    // @ts-ignore
+    const citySnapshot = await getDocs(query(...queryArgs));
     const response = citySnapshot.docs.map((doc) => {
       return doc.data();
     });
@@ -97,6 +134,7 @@ export default class CityDataStore {
       return;
     }
   };
+
 
   getCity = async (id: number) => {
     this._meta = Meta.loading;

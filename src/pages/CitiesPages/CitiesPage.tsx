@@ -1,5 +1,5 @@
 import Card from 'components/Card';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Meta } from 'utils/meta';
@@ -12,82 +12,85 @@ import Pagination from 'components/Pagination';
 import Loader from 'components/Loader';
 import styles from './CitiesPage.module.scss';
 import { usePage } from 'hooks/usePage';
+import MultiDropdown from 'components/MultiDropdown';
+import { countries } from 'store/CountriesStore';
+import { useCountriesFilter } from 'hooks/useCountriesFilter';
+import { truthy } from 'utils/truthy';
+import { useIsCapital } from 'hooks/useIsCapital';
+import { useSearch } from 'hooks/useSearch';
 
 const CitiesPages = () => {
-  const [params, setParams] = useSearchParams();
+  const [countryIds, setCountryIds] = useCountriesFilter();
   const [page, setPage] = usePage();
-
-  const search = params.get('search') ?? '';
-
-  const isCapital = (params.get('capital') ?? 'false') !== 'false';
+  const [isCapital, setIsCapital] = useIsCapital();
+  const [search, setSearch] = useSearch();
 
   useEffect(() => {
-    cities.getCities(page);
-  }, [page]);
+    cities.getCities({ page, countryIds, isCapital, search });
+    countries.getCountries();
+  }, [page, countryIds, isCapital, search]);
 
-  useEffect(() => {
-    cities.setSearchQuery(search);
-  }, [search]);
-
-  useEffect(() => {
-    cities.setCapitalFilter(isCapital);
-  }, [isCapital]);
-
-  const handleSearchChange = (v: string) => {
-    setParams((params) => {
-      params.set('search', v);
-      return params;
-    });
-  };
-
-  const handleCapitalChange = (v: boolean) => {
-    setParams((params) => {
-      params.set('capital', v.toString());
-      return params;
-    });
-  };
-
-  if (cities.meta === Meta.loading) {
-    return (
-      <div className={styles.loading}>
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div className={styles.container}>
       <div className={styles.containerHeader}>
         <div className={styles.containerSearch}>
-          <Input className={styles.input} value={search} onChange={handleSearchChange} />
-          <Button onClick={() => handleSearchChange('')}>Очистить</Button>
+          <Input className={styles.input} value={search} onChange={setSearch} />
+          <Button onClick={() => setSearch('')}>Очистить</Button>
         </div>
         <div className={styles.filterContain}>
           <p>Столица</p>
-          <CheckBox value={isCapital} onChange={handleCapitalChange}></CheckBox>
+          <CheckBox value={isCapital} onChange={setIsCapital}></CheckBox>
+          {countries.countries.length && (
+            <MultiDropdown
+              options={countries.countries.map((c) => {
+                return { key: String(c.id), value: c.name };
+              })}
+              value={countryIds
+                .map((id) => {
+                  return countries.countries.find((c) => c.id === id);
+                })
+                .filter(truthy)
+                .map((c) => ({ key: String(c.id), value: c.name }))}
+              onChange={(options) => setCountryIds(options.map((c) => parseInt(c.key)))}
+              getTitle={(options) => options.map((o) => o.value).join(', ')}
+            />
+          )}
         </div>
       </div>
       <div className={styles.containerCard}>
         <div className={styles.containerCardText}>
           <h2>Популярные города</h2>
         </div>
-        {cities.cities.length ? (
-          cities.cities.map((c: City) => (
-            <div className={styles.cardBlock} key={c.id}>
-              <Link to={`city/${c.id}`}>
-                <Card className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
-              </Link>
-            </div>
-          ))
+        {cities.meta === Meta.loading ? (
+          <div className={styles.loading}>
+            <Loader />
+          </div>
+        ) : cities.cities.length ? (
+          <>
+            {cities.cities.map((c: City) => (
+              <div className={styles.cardBlock} key={c.id}>
+                <Link to={`city/${c.id}`}>
+                  <Card className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
+                </Link>
+              </div>
+            ))}
+          </>
         ) : (
           <p>Города нет</p>
         )}
       </div>
-      {cities.count > 0 && (
-        <div className={styles.containerPagination}>
-          <Pagination limit={cities.LIMIT} count={cities.count} page={page} onChange={setPage} />
-        </div>
-      )}
+      <div>
+        {cities.meta === Meta.loading ? (
+          <span></span>
+        ) : (
+          cities.count > 0 && (
+            <div className={styles.containerPagination}>
+              <Pagination limit={cities.LIMIT} count={cities.count} page={page} onChange={setPage} />
+            </div>
+          )
+        )}
+      </div>
     </div>
   );
 };

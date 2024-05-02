@@ -58,10 +58,12 @@ const MultiDropdown: React.FC<MultiDropdownProps> = (props: MultiDropdownProps) 
   }, [isOpen, getTitle, value, setSearch]);
 
   const items = options
+
     .filter((option) => {
       if (search === null) return true;
       return option.value.toLocaleLowerCase().startsWith(search.toLocaleLowerCase());
     })
+
     .map((option) => {
       const isSelected = value.map((v) => v.key).includes(option.key);
 

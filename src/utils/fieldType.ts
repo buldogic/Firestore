@@ -13,3 +13,8 @@ export type City = {
   population: number;
   sight: string;
 };
+
+export type Country = {
+  name: string;
+  id:number;
+}
