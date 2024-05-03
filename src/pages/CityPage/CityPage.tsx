@@ -8,7 +8,7 @@ import { cities } from 'store/CityDataStore';
 import { Meta } from 'utils/meta';
 import { z } from 'zod';
 
-const idSchema = z.number().int().positive()
+const idSchema = z.number().int().positive();
 
 const CityPage = () => {
   const { id } = useParams();
@@ -16,7 +16,8 @@ const CityPage = () => {
   const goBack = () => navigate(-1);
 
   useEffect(() => {
-    const parsedId = idSchema.safeParse(id) 
+    const parsedId = idSchema.safeParse(Number(id));
+
     if (parsedId.success) {
       cities.getCity(parsedId.data);
     }
@@ -48,7 +49,7 @@ const CityPage = () => {
               <b>Достопримечательности :</b> {cities.city.singht ?? 'Список пуст'}
             </p>
           </div>
-            <Button>Посетить</Button>
+          <Button>Посетить</Button>
         </div>
       </div>
     </div>

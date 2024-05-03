@@ -1,14 +1,12 @@
 import {
   DocumentData,
   collection,
-  doc,
   getCountFromServer,
   getDocs,
   getFirestore,
   limit,
   orderBy,
   query,
-  setDoc,
   startAfter,
   where,
 } from 'firebase/firestore';
