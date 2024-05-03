@@ -87,7 +87,7 @@ export default class CityDataStore {
 
     if (args.search.length) {
       // @ts-ignore
-      countQuery.push(where('name', '==', args.search));
+      countQuery.push(where('name', '>=', args.search), where('name', '<=', args.search + '\uf8ff'));
     }
     // @ts-ignore
     const snapshot = await getCountFromServer(query(...countQuery));
@@ -108,7 +108,7 @@ export default class CityDataStore {
 
     if (args.search.length) {
       // @ts-ignore
-      queryArgs.push(where('name', '==', args.search));
+      queryArgs.push(where('name', '>=', args.search), where('name', '<=', args.search + '\uf8ff'));
     }
     // @ts-ignore
     const citySnapshot = await getDocs(query(...queryArgs));
