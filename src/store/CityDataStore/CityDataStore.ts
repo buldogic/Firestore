@@ -11,9 +11,9 @@ import {
   where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { City } from 'utils/fieldType';
-import app from 'utils/firebase';
-import { Meta } from 'utils/meta';
+import { City } from '../../utils/fieldType';
+import app from '../../utils/firebase';
+import { Meta } from '../../utils/meta';
 
 type PrivateValue = '_cities' | '_meta' | '_city';
 

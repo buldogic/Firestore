@@ -1,11 +1,10 @@
-
-
+import React from 'react';
 
 const CountryPage = () => {
- 
-
-    return (
-<div><h1>Country page</h1></div>
+  return (
+    <div>
+      <h1>Country page</h1>
+    </div>
   );
 };
 

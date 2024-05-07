@@ -1,5 +1,5 @@
-import Rout from 'routes/Routes';
-import './App.css';
+import React from 'react';
+import Rout from './routes/Routes';
 
 function App() {
   return <Rout />;

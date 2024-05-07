@@ -1,7 +1,9 @@
+import React from 'react';
+
 import type { FormProps } from 'antd';
 import { Form, Input } from 'antd';
-import Button from 'components/Button';
-import { FieldType } from 'utils/fieldType';
+import Button from '../../components/Button';
+import { FieldType } from '../../utils/fieldType';
 import z from 'zod';
 
 const schema = z.object({

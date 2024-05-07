@@ -1,29 +1,24 @@
-import Card from 'components/Card';
+import React from 'react';
+import Card from '../../components/Card';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Meta } from 'utils/meta';
-import { City } from 'utils/fieldType';
-import { cities } from 'store/CityDataStore';
-import Input from 'components/Input';
-import Button from 'components/Button';
-import CheckBox from 'components/CheckBox';
-import Pagination from 'components/Pagination';
-import Loader from 'components/Loader';
+import { Meta } from '../../utils/meta';
+import { City } from '../../utils/fieldType';
+import { cities } from '../../store/CityDataStore';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import CheckBox from '../../components/CheckBox';
+import Pagination from '../../components/Pagination';
+import Loader from '../../components/Loader';
+import MultiDropdown from '../../components/MultiDropdown';
+import { countries } from '../../store/CountriesStore';
+import { truthy } from '../../utils/truthy';
+import { useFilters } from '../../hooks/useFilters';
 import styles from './CitiesPage.module.scss';
-import { usePage } from 'hooks/usePage';
-import MultiDropdown from 'components/MultiDropdown';
-import { countries } from 'store/CountriesStore';
-import { useCountriesFilter } from 'hooks/useCountriesFilter';
-import { truthy } from 'utils/truthy';
-import { useIsCapital } from 'hooks/useIsCapital';
-import { useSearch } from 'hooks/useSearch';
 
 const CitiesPages = () => {
-  const [countryIds, setCountryIds] = useCountriesFilter();
-  const [page, setPage] = usePage();
-  const [isCapital, setIsCapital] = useIsCapital();
-  const [search, setSearch] = useSearch();
+  const { page, isCapital, search, countryIds, setPage, setSearch, setIsCapital, setCountryIds } = useFilters();
 
   useEffect(() => {
     cities.getCities({ page, countryIds, isCapital, search });

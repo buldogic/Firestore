@@ -1,11 +1,12 @@
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import Loader from 'components/Loader';
-import Button from 'components/Button';
+import Loader from '../../components/Loader';
+import Button from '../../components/Button';
 import styles from './CityPage.module.scss';
 import { observer } from 'mobx-react-lite';
-import { cities } from 'store/CityDataStore';
-import { Meta } from 'utils/meta';
+import { cities } from '../../store/CityDataStore';
+import { Meta } from '../../utils/meta';
 import { z } from 'zod';
 
 const idSchema = z.number().int().positive();

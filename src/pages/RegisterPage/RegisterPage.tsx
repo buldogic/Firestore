@@ -1,4 +1,5 @@
-import SingUp from 'components/Form/SingUp';
+import React from 'react';
+import SingUp from '../../components/Form/SingUp';
 import styles from './RegisterPage.module.scss';
 
 const RegisterPage = () => {

@@ -1,36 +1,67 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "useDefineForClassFields": true,
+//     "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
+//     "module": "ESNext",
+//     "skipLibCheck": true,
+
+//     "moduleResolution": "bundler",
+//     "allowImportingTsExtensions": true,
+//     "resolveJsonModule": true,
+//     "isolatedModules": true,
+//     "noEmit": true,
+//     "jsx": "react-jsx",
+
+//     "strict": true,
+//     "noUnusedLocals": true,
+//     "noUnusedParameters": true,
+//     "noFallthroughCasesInSwitch": true,
+
+//     "baseUrl": "src",
+//     "paths": {
+//       "authorization": ["authorization/*"],
+//       "pages": ["pages/*"],
+//       "routes": ["routes/*"],
+//       "components": ["components/*"],
+//       "config": ["config/*"],
+//       "styles": ["styles/*"],
+//       "utils": ["utils/*"],
+//       "store": ["store/*"],
+//       "hooks":["hooks/*"]
+//     }
+//   },
+//   "include": ["src"],
+//   "references": [{ "path": "./tsconfig.node.json" }]
+// }
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable", "WebWorker"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-
+    "allowJs": true,
+    "sourceMap": true,
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-
-    "baseUrl": "src",
-    "paths": {
-      "authorization": ["authorization/*"],
-      "pages": ["pages/*"],
-      "routes": ["routes/*"],
-      "components": ["components/*"],
-      "config": ["config/*"],
-      "styles": ["styles/*"],
-      "utils": ["utils/*"],
-      "store": ["store/*"],
-      "hooks":["hooks/*"]
-    }
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "module": "es2020",
+    "target": "es6",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
+
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["node_modules"],
+  "baseUrl": "src",
+  "paths": {
+    "authorization": ["authorization/*"],
+    "pages": ["pages/*"],
+    "routes": ["routes/*"],
+    "components": ["components/*"],
+    "config": ["config/*"],
+    "styles": ["styles/*"],
+    "utils": ["utils"],
+    "store": ["store/*"],
+    "hooks": ["hooks/*"]
+  },
 }

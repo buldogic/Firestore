@@ -1,8 +1,9 @@
+import React from 'react';
 import { useState } from 'react';
 import { Button, Checkbox, Form, FormProps, Input, InputNumber } from 'antd';
-import { FieldType } from 'utils/fieldType';
+import { FieldType } from '../../../utils/fieldType';
 import z from 'zod';
-import { Meta } from 'utils/meta';
+import { Meta } from '../../../utils/meta';
 import styles from './AddCityPage.module.scss';
 import { adminCityStore } from './AdminCityStore';
 

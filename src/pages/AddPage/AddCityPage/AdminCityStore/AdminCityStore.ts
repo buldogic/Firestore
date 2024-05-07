@@ -1,8 +1,9 @@
+import React from 'react';
 import { collection, doc, getDocs, getFirestore, limit, orderBy, query, setDoc } from 'firebase/firestore';
 import { action, computed, makeObservable, observable } from 'mobx';
-import { City } from 'utils/fieldType';
-import app from 'utils/firebase';
-import { Meta } from 'utils/meta';
+import { City } from '../../../../utils/fieldType';
+import app from '../../../../utils/firebase';
+import { Meta } from '../../../../utils/meta';
 
 type PrivateValue = '_meta';
 

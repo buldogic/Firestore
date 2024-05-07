@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './utils/firebase.ts';
-import App from './App.tsx';
+import './utils/firebase';
+import './config/configureMobX';
+import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import './config/configureMobX.ts';
 import './index.scss';
 
 

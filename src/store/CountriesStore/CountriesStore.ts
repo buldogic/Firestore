@@ -1,8 +1,8 @@
 import { DocumentData, collection, getDocs, getFirestore, limit, query, where } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { Country } from 'utils/fieldType';
-import app from 'utils/firebase';
-import { Meta } from 'utils/meta';
+import { Country } from '../../utils/fieldType';
+import app from '../../utils/firebase';
+import { Meta } from '../../utils/meta';
 
 type PrivateValue = '_countries' | '_meta' | '_country';
 

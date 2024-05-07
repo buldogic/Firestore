@@ -1,16 +1,17 @@
-import Layout from 'components/layout/Layout';
-import UserPage from 'pages/UserPage';
-import CityPage from 'pages/CityPage';
+import React from 'react';
+import Layout from '../components/layout/Layout';
+import UserPage from '../pages/UserPage';
+import CityPage from '../pages/CityPage';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from 'pages/LoginPage';
-import RegisterPage from 'pages/RegisterPage';
-import AdminPage from 'pages/AdminPage';
-import AddCityPage from 'pages/AddPage/AddCityPage';
-import AddTour from 'pages/AddPage/AddTuor';
+import LoginPage from '../pages/LoginPage';
+import RegisterPage from '../pages/RegisterPage';
+import AdminPage from '../pages/AdminPage';
+import AddCityPage from '../pages/AddPage/AddCityPage';
+import AddTour from '../pages/AddPage/AddTuor';
 import { observer } from 'mobx-react-lite';
-import { authStore } from 'store/AuthStore';
-import CountryPage from 'pages/CountryPage';
-import CitiesPages from 'pages/CitiesPages';
+import { authStore } from '../store/AuthStore';
+import CountryPage from '../pages/CountryPage';
+import CitiesPages from '../pages/CitiesPages';
 
 const Rout = () => {
   if (authStore._user === undefined) return null;

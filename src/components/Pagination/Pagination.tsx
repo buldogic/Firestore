@@ -1,4 +1,5 @@
-import Button from 'components/Button';
+import React from 'react';
+import Button from '../../components/Button';
 import cn from 'classnames';
 import styles from './Pagination.module.scss';
 
