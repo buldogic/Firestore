@@ -1,40 +1,49 @@
-// import HomePages from 'Pages';
 import Layout from 'components/layout/Layout';
 import UserPage from 'pages/UserPage';
 import CityPage from 'pages/CityPage';
-import HomePages from 'pages/HomePages';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from 'pages/LoginPage';
 import RegisterPage from 'pages/RegisterPage';
-import BlogPage from 'pages/BlogPage';
-import TodoPage from 'pages/TodoPage';
+import AdminPage from 'pages/AdminPage';
+import AddCityPage from 'pages/AddPage/AddCityPage';
+import AddTour from 'pages/AddPage/AddTuor';
+import { observer } from 'mobx-react-lite';
+import { authStore } from 'store/AuthStore';
+import CountryPage from 'pages/CountryPage';
+import CitiesPages from 'pages/CitiesPages';
 
-export type RoutesProps = {
-  children?: React.ReactNode;
-  location?: Partial<Location> | string;
-  path?: string;
-  element?: React.ReactNode | null;
-};
+const Rout = () => {
+  if (authStore._user === undefined) return null;
 
-const Rout: React.FC<RoutesProps> = (props: RoutesProps): React.ReactElement | null => {
+  if (authStore._user === null) {
+    return (
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    );
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<HomePages />} />
-        <Route path="CityPage" element={<CityPage />}>
+        <Route index element={<CitiesPages />} />
+        <Route path="city" element={<CityPage />}>
           <Route path=":id" element={<CityPage />} />
         </Route>
-        <Route path="BlogPage" element={<BlogPage />} />
-        <Route path="UserPage" element={<UserPage />}>
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-        </Route>
+        <Route path="country" element={<CountryPage />} />
+        <Route path="user" element={<UserPage />} />
       </Route>
-      <Route path="/todo" element={<TodoPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      {authStore._user.isAdmin && (
+        <Route path="/admin" element={<AdminPage />}>
+          <Route index element={<AddCityPage />} />
+          <Route path="addTour" element={<AddTour />} />
+        </Route>
+      )}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
 
-export default Rout;
+export default observer(Rout);

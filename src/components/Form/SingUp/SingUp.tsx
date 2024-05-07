@@ -1,23 +1,23 @@
 import FormAuth from 'components/Form';
 import styles from './SingUp.module.scss';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { authStore } from 'store/AuthStore';
 
 const SungUp = () => {
   return (
     <div className={styles.root}>
       <header className={styles.header}>
-        <h1>Register</h1>
+        <h1>Регистрация</h1>
       </header>
       <div className={styles.form}>
-        <FormAuth />
+        <FormAuth onSubmit={authStore.handleRigister} />
       </div>
       <div>
-        <p>
-          Already have an account? <Link to="/login">Sing in</Link>
-        </p>
-        <p>
-          <Link to="/">Home</Link>
-        </p>
+        У вас уже есть аккаунт?{' '}
+        <NavLink className={styles.link} to="/login">
+          {' '}
+          Войти
+        </NavLink>
       </div>
     </div>
   );

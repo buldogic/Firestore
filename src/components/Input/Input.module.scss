@@ -1,8 +1,8 @@
-@import '../../../styles/styles.css';
+@import "../../../styles/colorMixin.scss";
 
 .root {
   height: 52px;
-  background-color: #ffffff;
+  background-color: $white;
   padding: 16px 12px;
   display: flex;
   align-items: center;
@@ -10,22 +10,22 @@
 
   &.focus {
     outline: none;
-    background: #ffffff;
-    border: 1px solid #518581;
+    background: $white;
+    border: 1px solid $primary;
   }
   &.disabled {
-    color: #afadb5;
+    color: $secondary;
   }
 }
 
 .input {
-  background: #ffffff;
+  background: $white;
   width: 100%;
   border: none;
   outline: none;
   box-sizing: border-box;
   font-size: 16px;
-  color: #000000;
+  color: $black;
 }
 
 .icon {
