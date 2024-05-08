@@ -20,6 +20,7 @@ import styles from './CitiesPage.module.scss';
 const CitiesPages = () => {
   const { page, isCapital, search, countryIds, setPage, setSearch, setIsCapital, setCountryIds } = useFilters();
 
+
   useEffect(() => {
     cities.getCities({ page, countryIds, isCapital, search });
     countries.getCountries();

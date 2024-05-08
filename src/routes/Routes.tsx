@@ -7,11 +7,11 @@ import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import AdminPage from '../pages/AdminPage';
 import AddCityPage from '../pages/AddPage/AddCityPage';
-import AddTour from '../pages/AddPage/AddTuor';
 import { observer } from 'mobx-react-lite';
 import { authStore } from '../store/AuthStore';
 import CountryPage from '../pages/CountryPage';
 import CitiesPages from '../pages/CitiesPages';
+import AddCountries from '../pages/AddPage/AddCountries';
 
 const Rout = () => {
   if (authStore._user === undefined) return null;
@@ -39,7 +39,7 @@ const Rout = () => {
       {authStore._user.isAdmin && (
         <Route path="/admin" element={<AdminPage />}>
           <Route index element={<AddCityPage />} />
-          <Route path="addTour" element={<AddTour />} />
+          <Route path="countries" element={<AddCountries />} />
         </Route>
       )}
       <Route path="*" element={<Navigate to="/" />} />

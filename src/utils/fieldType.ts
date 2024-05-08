@@ -18,3 +18,14 @@ export type Country = {
   name: string;
   id:number;
 }
+
+export type addCity ={
+  id: number;
+  name: string;
+  is_capital: boolean;
+  description: string;
+  img: string;
+  population: number;
+  sight: string;
+  country: string;
+}

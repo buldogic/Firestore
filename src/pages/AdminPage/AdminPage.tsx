@@ -29,7 +29,7 @@ const AdminPage = () => {
     {
       key: '2',
       icon: <ApartmentOutlined />,
-      label: <NavLink to="addTour"> Добавить страну </NavLink>,
+      label: <NavLink to="countries"> Добавить страну </NavLink>,
     },
     {
       key: '3',
