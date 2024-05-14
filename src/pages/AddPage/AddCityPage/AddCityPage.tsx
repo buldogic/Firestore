@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import TableCities from './TableCities';
 import Loader from '../../../components/Loader';
 import { observer } from 'mobx-react-lite';
-import { adminCityStore } from './AdminCityStore';
+import { adminCityStore } from '../AdminCityStore';
 import styles from './AddCityPage.module.scss';
 import { Button, Modal } from 'antd';
 import AddCityForm from './AddCityForm';
+import { countries } from '../../../store/CountriesStore';
 
 const AddCityPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,9 +21,8 @@ const AddCityPage = () => {
 
   useEffect(() => {
     adminCityStore.getCities();
+    countries.getCountries()
   }, []);
- 
-
 
   return (
     <div className={styles.container}>

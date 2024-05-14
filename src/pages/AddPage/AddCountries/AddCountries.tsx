@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import InfoTable from '../../../components/Table/InfoTable';
 import { countries } from '../../../store/CountriesStore';
 import { observer } from 'mobx-react-lite';
+import TableCountries from './TableCountries';
 
 const AddCountries = () => {
 
@@ -10,10 +10,9 @@ const AddCountries = () => {
   },[])
 
 
-console.log(countries.countries)
   return (
     <div>
-      <InfoTable  data={countries.countries} />
+      <TableCountries  data={[...countries.countries]} />
     </div>
   );
 };

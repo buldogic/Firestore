@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import {  Modal, Space, Table, Tag, Tooltip } from 'antd';
+import React, { useMemo, useState } from 'react';
+import { Button, Modal, Space, Table, Tag, Tooltip } from 'antd';
 import { addCity } from '../../../../utils/fieldType';
 import styles from './TableCities.module.scss';
 import AddCityForm from '../AddCityForm';
-import { adminCityStore } from '../AdminCityStore';
+import { adminCityStore } from '../../AdminCityStore';
+import { date } from 'zod';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 
 const { Column } = Table;
-
-
 
 const TableCities = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,17 +17,16 @@ const TableCities = () => {
     setIsModalOpen(true);
   };
 
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
- 
   return (
     <div>
       <Table
-        dataSource={adminCityStore.cities}
+        dataSource={[...adminCityStore.cities]}
         bordered
+        rowKey="id"
         pagination={{
           pageSize: 8,
           showSizeChanger: false,
@@ -35,15 +34,15 @@ const TableCities = () => {
           size: 'small',
         }}
       >
-        <Column title="Город" dataIndex="name" key="id" />
+        <Column title="Город" align="center" dataIndex="name" key="name" />
 
-        <Column title="Страна" dataIndex="country" key="id" />
-        <Column title="Население" dataIndex="population" key="id" />
+        <Column title="Страна" dataIndex="country" key="country" />
+        <Column title="Население" dataIndex="population" key="population" />
         <Column
           title="Описание"
           dataIndex="description"
           ellipsis={{ showTitle: false }}
-          key="id"
+          key="description"
           render={(description) => (
             <Tooltip placement="topLeft" title={description}>
               {description}
@@ -54,7 +53,7 @@ const TableCities = () => {
           title="Объекты"
           dataIndex="sight"
           ellipsis={{ showTitle: false }}
-          key="id"
+          key="sight"
           render={(sight) => (
             <Tooltip placement="topLeft" title={sight}>
               {sight}
@@ -64,7 +63,7 @@ const TableCities = () => {
         <Column
           title="Столица"
           dataIndex="is_capital"
-          key="id"
+          key="is_capital"
           align="center"
           render={(tags: boolean[]) => (
             <>{tags ? <Tag color={'green'}>{'yse'}</Tag> : <Tag color={'red'}>{'no'}</Tag>}</>
@@ -76,10 +75,14 @@ const TableCities = () => {
           key="action"
           render={(_: any, record: addCity) => (
             <Space size="middle">
-              <a type="primary" onClick={showModal}>
-                Изменить
-              </a>
-              <a>Удалить</a>
+              <Button type='primary' icon={<EditOutlined/>} onClick={showModal} />
+
+              <Button type='primary' danger icon={<DeleteOutlined/>} 
+                onClick={() => {
+                  adminCityStore.deleteCities(record.id);
+                }}
+              />
+              
             </Space>
           )}
         />

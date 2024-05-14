@@ -1,16 +1,17 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, Checkbox, Form, FormProps, Input, InputNumber } from 'antd';
+import { Button, Checkbox, Form, FormProps, Input, InputNumber, Select } from 'antd';
 import { FieldType } from '../../../../utils/fieldType';
 import z from 'zod';
 import { Meta } from '../../../../utils/meta';
-import { adminCityStore } from '../AdminCityStore';
+import { adminCityStore } from '../../AdminCityStore';
 import styles from './AddCityForm.module.scss';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { countries } from '../../../../store/CountriesStore';
 import { observer } from 'mobx-react-lite';
 
 const shemeCity = z.object({
-  country: z.string(),
+  countryId: z.number().int().positive(),
   name: z.string(),
   is_capital: z.boolean(),
   description: z.string(),
@@ -31,7 +32,7 @@ const formItemLayout = {
 };
 
 const initialValues = {
-  country: '',
+  countryId: undefined,
   name: '',
   is_capital: false,
   description: '',
@@ -49,9 +50,12 @@ const AddCityForm = () => {
   const [notification, setNotification] = useState<null | boolean>(null);
 
   const onFinish = async (values: unknown) => {
+    console.log(values)
     const result = shemeCity.safeParse(values);
     if (!result.success) return;
-    await adminCityStore.createCity(result.data);
+    const country = countries.getLocalCountry(result.data.countryId)
+    if (country === null) return
+    await adminCityStore.createCity({...result.data, country: country.name });
     if (adminCityStore.meta === Meta.success) {
       setNotification(true);
       form.resetFields();
@@ -87,31 +91,68 @@ const AddCityForm = () => {
           initialValues={initialValues}
           {...formItemLayout}
         >
-          <Form.Item label="Название Страны" name="country" rules={[{ required: true, message: 'Пожалуйста введите название страны!' }]}>
-            <Input />
+          <Form.Item
+            name="countryId"
+            label="Название Страны"
+            rules={[{ required: true, message: 'Пожалуйста введите название страны!' }]}
+          >
+            <Select placeholder="Select a option and change input text above" allowClear>
+              {countries.countries.map((c) => (
+                <Select.Option key={c.id} value={c.id}>
+                  {c.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
+          {/* <Form.Item
+            label="Название Страны"
+            name="country"
+            rules={[{ required: true, message: 'Пожалуйста введите название страны!' }]}
+          >
+            <Input />
+          </Form.Item> */}
 
           <Form.Item valuePropName="checked" label="Столица Страны" name="is_capital">
             <Checkbox defaultChecked={false} />
           </Form.Item>
 
-          <Form.Item label="Название Города" name="name" rules={[{ required: true, message: 'Пожалуйста введите название города!' }]}>
+          <Form.Item
+            label="Название Города"
+            name="name"
+            rules={[{ required: true, message: 'Пожалуйста введите название города!' }]}
+          >
             <Input style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item label="Описание Города" name="description" rules={[{ required: true, message: 'Пожалуйста введите описание города!' }]}>
+          <Form.Item
+            label="Описание Города"
+            name="description"
+            rules={[{ required: true, message: 'Пожалуйста введите описание города!' }]}
+          >
             <Input.TextArea />
           </Form.Item>
 
-          <Form.Item label="URL изображения" name="img" rules={[{ required: true, message: 'Пожалуйста введите ссылку на изображение!' }]}>
+          <Form.Item
+            label="URL изображения"
+            name="img"
+            rules={[{ required: true, message: 'Пожалуйста введите ссылку на изображение!' }]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="Население" name="population" rules={[{ required: true, message: 'Пожалуйста введите цифру население!' }]}>
+          <Form.Item
+            label="Население"
+            name="population"
+            rules={[{ required: true, message: 'Пожалуйста введите цифру население!' }]}
+          >
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item label="Достопримечательности" name="sight" rules={[{ required: true, message: 'Пожалуйста введите достопримечательности города!' }]}>
+          <Form.Item
+            label="Достопримечательности"
+            name="sight"
+            rules={[{ required: true, message: 'Пожалуйста введите достопримечательности города!' }]}
+          >
             <Input />
           </Form.Item>
 
@@ -126,4 +167,4 @@ const AddCityForm = () => {
   );
 };
 
-export default AddCityForm;
+export default observer(AddCityForm);

@@ -27,5 +27,6 @@ export type addCity ={
   img: string;
   population: number;
   sight: string;
+  countryId: number;
   country: string;
 }
