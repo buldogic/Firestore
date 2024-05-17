@@ -20,7 +20,7 @@ const Layout: React.FC = () => {
           </NavLink>
         </div>
         <div>
-          <NavLink className={styles.link} to="country">
+          <NavLink className={styles.link} to="countries">
             Страны
           </NavLink>
         </div>

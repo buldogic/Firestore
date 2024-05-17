@@ -2,6 +2,7 @@ import React from 'react';
 import Text from '../Text';
 import cn from 'classnames';
 import styles from './Card.module.scss';
+import Like from '../Like';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -29,6 +30,9 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
     <div className={cn(className, styles.card)} onClick={onClick}>
       <div className={styles.cardImg}>
         <img className={styles.img} src={image} alt="Card" />
+        <div className={styles.like}>
+          <Like/>
+        </div>
       </div>
       <div className={styles.cardContent}>
         {captionSlot && (

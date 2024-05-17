@@ -24,17 +24,17 @@ const AdminPage = () => {
     {
       key: '1',
       icon: <FileAddOutlined />,
-      label: <NavLink to="/admin"> Добавить город </NavLink>,
+      label: <NavLink to="/admin/cities"> Добавить город </NavLink>,
     },
     {
       key: '2',
       icon: <ApartmentOutlined />,
-      label: <NavLink to="countries"> Добавить страну </NavLink>,
+      label: <NavLink to="/admin/countries"> Добавить страну </NavLink>,
     },
     {
       key: '3',
       icon: <IdcardOutlined />,
-      label: <NavLink to="users"> Пользователи </NavLink>,
+      label: <NavLink to="/admin/users"> Пользователи </NavLink>,
     },
     {
       key: '4',

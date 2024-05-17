@@ -15,9 +15,18 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
+  position: relative;
+}
+
+.like{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-size: contain;
 }
 
 .card {
+  display: block;
   background-color: $white;
 }
 
@@ -26,6 +35,8 @@
   flex-direction: column;
   padding: 24px 12px;
   gap: 8px;
+  min-height: 172px;
+
 }
 
 .cardActions {

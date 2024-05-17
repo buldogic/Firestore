@@ -12,11 +12,15 @@ export type City = {
   img: string;
   population: number;
   sight: string;
+  country: string;
 };
 
 export type Country = {
   name: string;
   id:number;
+  description: string;
+  population: number;
+  img: string;
 }
 
 export type addCity ={

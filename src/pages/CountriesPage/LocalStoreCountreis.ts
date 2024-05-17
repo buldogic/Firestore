@@ -1,5 +1,4 @@
 import {
-  DocumentData,
   collection,
   getCountFromServer,
   getDocs,
@@ -15,72 +14,52 @@ import { City } from '../../utils/fieldType';
 import app from '../../utils/firebase';
 import { Meta } from '../../utils/meta';
 
-type PrivateValue = '_cities' | '_meta' | '_city';
+type PrivateValue = '_countries' | '_meta';
 
-export default class CityDataStore {
-  private _cities: City[] = [];
+export default class LocalStoreCountries {
+  private _countries: City[] = [];
   private _meta: Meta = Meta.initial;
-  private _city: DocumentData = [];
 
   query: string = '';
-  isCapital = false;
   count: number = 0;
   LIMIT = 8;
 
   constructor() {
-    makeObservable<CityDataStore, PrivateValue>(this, {
-      _cities: observable,
+    makeObservable<LocalStoreCountries, PrivateValue>(this, {
+      _countries: observable,
       _meta: observable,
-      _city: observable,
       query: observable,
       count: observable,
-      isCapital: observable,
-      cities: computed,
+      countries: computed,
       meta: computed,
-      city: computed,
-      getCities: action,
-      getCity: action,
+      getCountries: action,
       setSearchQuery: action,
-      setCapitalFilter: action,
     });
   }
 
-  get cities() {
-    return this._cities;
+  get countries() {
+    return this._countries;
   }
 
   get meta() {
     return this._meta;
   }
 
-  get city() {
-    return this._city;
-  }
-
   setSearchQuery = (query: string) => {
     this.query = query;
   };
 
-  setCapitalFilter = (v: boolean) => {
-    this.isCapital = v;
-  };
-
-  getCities = async (args: { page: number; countryIds: number[]; isCapital: boolean; search: string }) => {
+  getCountries = async (args: { page: number; countryIds: number[]; search: string }) => {
     this._meta = Meta.loading;
-    this._cities = [];
+    this._countries = [];
 
     const db = getFirestore(app);
-    const citiesCol = collection(db, 'cities');
+    const citiesCol = collection(db, 'countries');
     const countQuery = [citiesCol];
 
     if (args.countryIds.length) {
       // @ts-ignore
-      countQuery.push(where('countryId', 'in', args.countryIds));
-    }
-
-    if (args.isCapital) {
-      // @ts-ignore
-      countQuery.push(where('is_capital', '==', args.isCapital));
+      countQuery.push(where('id', 'in', args.countryIds));
     }
 
     if (args.search.length) {
@@ -96,12 +75,7 @@ export default class CityDataStore {
     const queryArgs = [citiesCol, orderBy('id'), limit(this.LIMIT), startAfter(args.page * this.LIMIT)];
     if (args.countryIds.length) {
       // @ts-ignore
-      queryArgs.push(where('countryId', 'in', args.countryIds));
-    }
-
-    if (args.isCapital) {
-      // @ts-ignore
-      queryArgs.push(where('is_capital', '==', args.isCapital));
+      queryArgs.push(where('id', 'in', args.countryIds));
     }
 
     if (args.search.length) {
@@ -116,30 +90,9 @@ export default class CityDataStore {
     if (response.length !== 0) {
       runInAction(() => {
         this._meta = Meta.success;
-        this._cities = response as City[];
+        this._countries = response as City[];
       });
       return;
     }
   };
-
-  getCity = async (id: number) => {
-    this._meta = Meta.loading;
-    this._city = [];
-
-    const db = getFirestore(app);
-    const docRef = query(collection(db, 'cities'), where('id', '==', id), limit(1));
-    const docSnap = await getDocs(docRef);
-    if (docSnap.docs[0].exists()) {
-      runInAction(() => {
-        this._meta = Meta.success;
-        this._city = docSnap.docs[0].data();
-      });
-    } else {
-      runInAction(() => {
-        this._meta = Meta.error;
-      });
-    }
-  };
 }
-
-export const cities = new CityDataStore();

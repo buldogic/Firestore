@@ -4,28 +4,26 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Meta } from '../../utils/meta';
-import { City } from '../../utils/fieldType';
+import { Country } from '../../utils/fieldType';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import CheckBox from '../../components/CheckBox';
 import Pagination from '../../components/Pagination';
 import Loader from '../../components/Loader';
 import MultiDropdown from '../../components/MultiDropdown';
 import { countries } from '../../store/CountriesStore';
 import { truthy } from '../../utils/truthy';
 import { useFilters } from '../../hooks/useFilters';
-import styles from './CitiesPage.module.scss';
-import CitiesLocalStore from './CitiesLocalStore';
+import LocalStoreCountries from './LocalStoreCountreis';
+import styles from './CountriesPage.module.scss';
 
-const CitiesPages = () => {
-  const citiesLocalStore = useMemo(() => new CitiesLocalStore(), []);
-  const { page, isCapital, search, countryIds, setPage, setSearch, setIsCapital, setCountryIds } = useFilters();
-
+const CountriesPage = () => {
+  const localStoreCountries = useMemo(() => new LocalStoreCountries(), []);
+  const { page, search, countryIds, setPage, setSearch, setCountryIds } = useFilters();
 
   useEffect(() => {
-    citiesLocalStore.getCities({ page, countryIds, isCapital, search });
+    localStoreCountries.getCountries({ page, countryIds, search });
     countries.getCountries();
-  }, [page, countryIds, isCapital, search]);
+  }, [page, countryIds, search]);
 
   return (
     <div className={styles.container}>
@@ -35,9 +33,6 @@ const CitiesPages = () => {
           <Button onClick={() => setSearch('')}>Очистить</Button>
         </div>
         <div className={styles.filterContain}>
-          <p>Столица</p>
-          <CheckBox value={isCapital} onChange={setIsCapital}></CheckBox>
-          {countries.countries.length && (
             <MultiDropdown
               options={countries.countries.map((c) => {
                 return { key: String(c.id), value: c.name };
@@ -51,38 +46,42 @@ const CitiesPages = () => {
               onChange={(options) => setCountryIds(options.map((c) => parseInt(c.key)))}
               getTitle={(options) => options.map((o) => o.value).join(', ')}
             />
-          )}
         </div>
       </div>
       <div className={styles.containerCard}>
         <div className={styles.containerCardText}>
-          <h2>Города</h2>
+          <h2>Страны</h2>
         </div>
-        {citiesLocalStore.meta === Meta.loading ? (
+        {localStoreCountries.meta === Meta.loading ? (
           <div className={styles.loading}>
             <Loader />
           </div>
-        ) : citiesLocalStore.cities.length ? (
+        ) : localStoreCountries.countries.length ? (
           <>
-            {citiesLocalStore.cities.map((c: City) => (
+            {localStoreCountries.countries.map((c: Country) => (
               <div className={styles.cardBlock} key={c.id}>
-                <Link to={`city/${c.id}`}>
+                <Link to={`country/${c.id}`}>
                   <Card className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
                 </Link>
               </div>
             ))}
           </>
         ) : (
-          <p>Города нет</p>
+          <p>Страны нет</p>
         )}
       </div>
       <div>
-        {citiesLocalStore.meta === Meta.loading ? (
+        {localStoreCountries.meta === Meta.loading ? (
           <span></span>
         ) : (
-          citiesLocalStore.count > 0 && (
+          localStoreCountries.count > 0 && (
             <div className={styles.containerPagination}>
-              <Pagination limit={citiesLocalStore.LIMIT} count={citiesLocalStore.count} page={page} onChange={setPage} />
+              <Pagination
+                limit={localStoreCountries.LIMIT}
+                count={localStoreCountries.count}
+                page={page}
+                onChange={setPage}
+              />
             </div>
           )
         )}
@@ -91,4 +90,4 @@ const CitiesPages = () => {
   );
 };
 
-export default observer(CitiesPages);
+export default observer(CountriesPage);

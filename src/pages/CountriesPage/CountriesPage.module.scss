@@ -1,0 +1,82 @@
+@import "../../styles/colorMixin.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+
+  padding: 4rem;
+  color: $black;
+  background-color: $layout;
+}
+
+.containerCard {
+  display: flex;
+  height: 100%;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: start;
+}
+
+.containerCardText {
+  display: block;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+
+.cardBlock {
+  width: 300px;
+  max-width: 300px;
+  height: 400px;
+  border-radius: 10px;
+}
+
+.filterContain {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.containerSearch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 12px;
+}
+
+.containerHeader {
+  padding: 0 1rem;
+  margin-bottom: 30px;
+}
+
+.input {
+  flex-grow: 1;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px $border;
+  z-index: 1;
+}
+
+.button {
+  border-radius: 10px;
+}
+
+.loading {
+  width: 100%;
+  display: flex;
+  padding-top: 8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerPagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+  flex-grow: 1;
+}

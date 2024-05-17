@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import TableCities from './TableCities';
 import Loader from '../../../components/Loader';
 import { observer } from 'mobx-react-lite';
-import { adminCityStore } from '../AdminCityStore';
+import { cityStoreAdmin } from './CityStoreAdmin';
 import styles from './AddCityPage.module.scss';
 import { Button, Modal } from 'antd';
 import AddCityForm from './AddCityForm';
@@ -20,8 +20,8 @@ const AddCityPage = () => {
   };
 
   useEffect(() => {
-    adminCityStore.getCities();
-    countries.getCountries()
+    cityStoreAdmin.getCities();
+    countries.getCountries();
   }, []);
 
   return (
@@ -34,7 +34,7 @@ const AddCityPage = () => {
           <AddCityForm />
         </Modal>
       </div>
-      {adminCityStore.cities.length ? (
+      {cityStoreAdmin.cities.length ? (
         <div className={styles.tableContainer}>
           <TableCities />
         </div>

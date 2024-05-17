@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   collection,
   deleteDoc,
@@ -9,29 +8,37 @@ import {
   orderBy,
   query,
   setDoc,
+  updateDoc,
   where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { addCity } from '../../../utils/fieldType';
-import app from '../../../utils/firebase';
-import { Meta } from '../../../utils/meta';
+import { addCity } from '../../../../utils/fieldType';
+import app from '../../../../utils/firebase';
+import { Meta } from '../../../../utils/meta';
+import { observer } from 'mobx-react-lite';
 
-type PrivateValue = '_meta' | '_cities';
+type PrivateValue = '_meta' | '_cities' | '_updarteCityMeta';
 
-export default class AdminCityStore {
+export default class CityStoreAdmin {
   private _meta: Meta = Meta.initial;
   private _cities: addCity[] = [];
+  private _updarteCityMeta = Meta.initial;
 
   constructor() {
-    makeObservable<AdminCityStore, PrivateValue>(this, {
+    makeObservable<CityStoreAdmin, PrivateValue>(this, {
       _meta: observable,
+      _updarteCityMeta: observable,
       _cities: observable.shallow,
       cities: computed,
+      updateCityMeta:computed,
       meta: computed,
       createCity: action,
       getCities: action,
+
     });
   }
+
+  
 
   get meta() {
     return this._meta;
@@ -70,11 +77,27 @@ export default class AdminCityStore {
     });
   };
 
+  getStoredCity = (id: number) => {
+    return this._cities.find((c) => c.id === id) ?? null;
+  };
+
   deleteCities = async (id: number) => {
     const db = getFirestore(app);
     await deleteDoc(doc(db, 'cities', String(id)));
     this.getCities();
   };
+
+  updateCity = async (city: addCity) => {
+    this._updarteCityMeta = Meta.loading
+    const db = getFirestore(app);
+    await updateDoc(doc(db, 'cities', String(city.id)), city);
+    this._updarteCityMeta = Meta.success
+    this.getCities();
+
+  };
+  get updateCityMeta () {
+    return this._updarteCityMeta
+  }
 }
 
-export const adminCityStore = new AdminCityStore();
+export const cityStoreAdmin = new CityStoreAdmin();

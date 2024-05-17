@@ -1,30 +1,30 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Button, Modal, Space, Table, Tag, Tooltip } from 'antd';
 import { addCity } from '../../../../utils/fieldType';
 import styles from './TableCities.module.scss';
-import AddCityForm from '../AddCityForm';
-import { adminCityStore } from '../../AdminCityStore';
-import { date } from 'zod';
+import СhangeCityForm from '../СhangeCityForm/СhangeCityForm';
+import { cityStoreAdmin } from '../CityStoreAdmin';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 
 const { Column } = Table;
 
 const TableCities = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cityIdForUpdate, setCityIdForUpdate] = useState<number | undefined>(undefined);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const showModal = useCallback((id: number) => {
+    setCityIdForUpdate(id);
+  }, [setCityIdForUpdate])
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  
+  const handleCancel = useCallback(() => {
+    setCityIdForUpdate(undefined)
+  }, [setCityIdForUpdate]);
 
   return (
     <div>
       <Table
-        dataSource={[...adminCityStore.cities]}
+        dataSource={[...cityStoreAdmin.cities]}
         bordered
         rowKey="id"
         pagination={{
@@ -75,21 +75,23 @@ const TableCities = () => {
           key="action"
           render={(_: any, record: addCity) => (
             <Space size="middle">
-              <Button type='primary' icon={<EditOutlined/>} onClick={showModal} />
+              <Button type="primary" icon={<EditOutlined />} onClick={() => showModal(record.id)} />
 
-              <Button type='primary' danger icon={<DeleteOutlined/>} 
+              <Button
+                type="primary"
+                danger
+                icon={<DeleteOutlined />}
                 onClick={() => {
-                  adminCityStore.deleteCities(record.id);
+                  cityStoreAdmin.deleteCities(record.id);
                 }}
               />
-              
             </Space>
           )}
         />
       </Table>
       <div className={styles.addCityButton}>
-        <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
-          <AddCityForm />
+        <Modal width={'auto'} className={styles.modal} footer={null} open={cityIdForUpdate !== undefined} onCancel={handleCancel}>
+          {cityIdForUpdate && <СhangeCityForm onClose={handleCancel} id={cityIdForUpdate} />}
         </Modal>
       </div>
     </div>

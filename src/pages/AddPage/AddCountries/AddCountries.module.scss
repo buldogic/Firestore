@@ -1,0 +1,25 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+
+}
+
+.modal{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+
+.tableContainer {
+  max-height: 650px;
+  overflow: auto; 
+}
+
+
+.addCountryButton{
+  display: flex;
+  align-items: end;
+}
