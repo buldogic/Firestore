@@ -42,15 +42,15 @@ const getSettingsForStyles = (withModules = false) => {
   ];
 };
 
-
 module.exports = {
+  mode: isProd ? 'production' : 'development',
   entry: path.resolve(__dirname, './src/main.tsx'),
   target: !isProd ? 'web' : 'browserslist',
   devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
   output: {
     path: buildPath,
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: isProd ? '/Firestore/' : '/',
   },
   devServer: {
     host: '127.0.0.1',
@@ -60,7 +60,7 @@ module.exports = {
     historyApiFallback: true,
   },
   module: {
-    rules: [    
+    rules: [
       {
         test: /\.module\.s?css$/,
         use: getSettingsForStyles(true),
@@ -91,7 +91,7 @@ module.exports = {
   },
   plugins: [
     new Dotenv({
-      path : '.env.local'
+      path: '.env.local',
     }),
     new HtmlWebpackPlugin({
       template: path.join(srcPath, 'index.html'),
