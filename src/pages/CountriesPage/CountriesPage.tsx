@@ -33,19 +33,19 @@ const CountriesPage = () => {
           <Button onClick={() => setSearch('')}>Очистить</Button>
         </div>
         <div className={styles.filterContain}>
-            <MultiDropdown
-              options={countries.countries.map((c) => {
-                return { key: String(c.id), value: c.name };
-              })}
-              value={countryIds
-                .map((id) => {
-                  return countries.countries.find((c) => c.id === id);
-                })
-                .filter(truthy)
-                .map((c) => ({ key: String(c.id), value: c.name }))}
-              onChange={(options) => setCountryIds(options.map((c) => parseInt(c.key)))}
-              getTitle={(options) => options.map((o) => o.value).join(', ')}
-            />
+          <MultiDropdown
+            options={countries.countries.map((c) => {
+              return { key: String(c.id), value: c.name };
+            })}
+            value={countryIds
+              .map((id) => {
+                return countries.countries.find((c) => c.id === id);
+              })
+              .filter(truthy)
+              .map((c) => ({ key: String(c.id), value: c.name }))}
+            onChange={(options) => setCountryIds(options.map((c) => parseInt(c.key)))}
+            getTitle={(options) => options.map((o) => o.value).join(', ')}
+          />
         </div>
       </div>
       <div className={styles.containerCard}>

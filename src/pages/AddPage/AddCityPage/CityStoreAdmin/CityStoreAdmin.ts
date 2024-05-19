@@ -15,7 +15,6 @@ import { action, computed, makeObservable, observable, runInAction } from 'mobx'
 import { addCity } from '../../../../utils/fieldType';
 import app from '../../../../utils/firebase';
 import { Meta } from '../../../../utils/meta';
-import { observer } from 'mobx-react-lite';
 
 type PrivateValue = '_meta' | '_cities' | '_updarteCityMeta';
 
@@ -30,15 +29,12 @@ export default class CityStoreAdmin {
       _updarteCityMeta: observable,
       _cities: observable.shallow,
       cities: computed,
-      updateCityMeta:computed,
+      updateCityMeta: computed,
       meta: computed,
       createCity: action,
       getCities: action,
-
     });
   }
-
-  
 
   get meta() {
     return this._meta;
@@ -88,15 +84,14 @@ export default class CityStoreAdmin {
   };
 
   updateCity = async (city: addCity) => {
-    this._updarteCityMeta = Meta.loading
+    this._updarteCityMeta = Meta.loading;
     const db = getFirestore(app);
     await updateDoc(doc(db, 'cities', String(city.id)), city);
-    this._updarteCityMeta = Meta.success
+    this._updarteCityMeta = Meta.success;
     this.getCities();
-
   };
-  get updateCityMeta () {
-    return this._updarteCityMeta
+  get updateCityMeta() {
+    return this._updarteCityMeta;
   }
 }
 

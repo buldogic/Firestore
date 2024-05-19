@@ -21,7 +21,6 @@ const CitiesPages = () => {
   const citiesLocalStore = useMemo(() => new CitiesLocalStore(), []);
   const { page, isCapital, search, countryIds, setPage, setSearch, setIsCapital, setCountryIds } = useFilters();
 
-
   useEffect(() => {
     citiesLocalStore.getCities({ page, countryIds, isCapital, search });
     countries.getCountries();
@@ -82,7 +81,12 @@ const CitiesPages = () => {
         ) : (
           citiesLocalStore.count > 0 && (
             <div className={styles.containerPagination}>
-              <Pagination limit={citiesLocalStore.LIMIT} count={citiesLocalStore.count} page={page} onChange={setPage} />
+              <Pagination
+                limit={citiesLocalStore.LIMIT}
+                count={citiesLocalStore.count}
+                page={page}
+                onChange={setPage}
+              />
             </div>
           )
         )}

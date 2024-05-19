@@ -1,6 +1,6 @@
 const path = require('path');
 
-const buildPath = path.resolve(__dirname, 'dist');
+const buildPath = path.resolve(__dirname, 'build');
 
 const isProd = process.env.NODE_ENV === 'production';
 

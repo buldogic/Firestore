@@ -12,17 +12,6 @@ import styles from './СhangeCityForm.module.scss';
 import CityForm, { CityFormValues } from '../../../../components/Form/City/City';
 import { countries } from '../../../../store/CountriesStore';
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
-
 const initialValues = {
   countryId: undefined,
   name: '',

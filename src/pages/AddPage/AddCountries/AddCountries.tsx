@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import TableCountries from './TableCountries';
 import { Button, Modal } from 'antd';
-import styles from './AddCountries.module.scss'
+import styles from './AddCountries.module.scss';
 import Loader from '../../../components/Loader';
 import AddCountryForm from './AddCountryForm';
 import { countryStoreAdmin } from './CountryStoreAdmin';
@@ -18,30 +18,28 @@ const AddCountries = () => {
     setIsModalOpen(false);
   };
 
-
   useEffect(() => {
-    countryStoreAdmin.getCountries()
-  },[])
-
+    countryStoreAdmin.getCountries();
+  }, []);
 
   return (
     <div className={styles.container}>
-    <div className={styles.addCountryButton}>
-      <Button type="primary" onClick={showModal}>
-        Добавить страну
-      </Button>
-      <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
-        <AddCountryForm/>
-      </Modal>
-    </div>
-    {countryStoreAdmin.countries.length ? (
-      <div className={styles.tableContainer}>
-        <TableCountries />
+      <div className={styles.addCountryButton}>
+        <Button type="primary" onClick={showModal}>
+          Добавить страну
+        </Button>
+        <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
+          <AddCountryForm />
+        </Modal>
       </div>
-    ) : (
-      <Loader />
-    )}
-  </div>
+      {countryStoreAdmin.countries.length ? (
+        <div className={styles.tableContainer}>
+          <TableCountries />
+        </div>
+      ) : (
+        <Loader />
+      )}
+    </div>
   );
 };
 

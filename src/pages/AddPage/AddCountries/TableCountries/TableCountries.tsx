@@ -15,8 +15,6 @@ const TableCountries = () => {
 
   const showModal = (id: number) => {
     setIdCity(id);
-    // console.log(id);
-    // cityStoreAdmin.getCity(id)
     setIsModalOpen(true);
   };
 
@@ -32,7 +30,7 @@ const TableCountries = () => {
         bordered
         rowKey="id"
         pagination={{
-          pageSize: 8,
+          pageSize: 7,
           showSizeChanger: false,
           hideOnSinglePage: true,
           size: 'small',
@@ -72,15 +70,13 @@ const TableCountries = () => {
           )}
         />
       </Table>
-       <div className={styles.addButton}>
+      <div className={styles.addButton}>
         <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
-           {/* <СhangeCityForm id={idCity} /> */}
-         </Modal>
-      </div> 
+          {/* <СhangeCityForm id={idCity} /> */}
+        </Modal>
+      </div>
     </div>
   );
 };
-
-
 
 export default observer(TableCountries);

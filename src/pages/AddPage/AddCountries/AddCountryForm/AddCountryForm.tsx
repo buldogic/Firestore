@@ -46,7 +46,7 @@ const AddCountryForm = () => {
     console.log(values);
     const result = shemeCity.safeParse(values);
     if (!result.success) return;
-    await countryStoreAdmin.createCountry({ ...result.data});
+    await countryStoreAdmin.createCountry({ ...result.data });
     if (countryStoreAdmin.createCountryMeta === Meta.success) {
       setNotification(true);
       form.resetFields();
@@ -82,9 +82,8 @@ const AddCountryForm = () => {
           initialValues={initialValues}
           {...formItemLayout}
         >
-      
           <Form.Item
-             label="Название Страны"
+            label="Название Страны"
             name="name"
             rules={[{ required: true, message: 'Пожалуйста введите название страны!' }]}
           >

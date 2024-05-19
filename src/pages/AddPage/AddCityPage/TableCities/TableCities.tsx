@@ -28,7 +28,7 @@ const TableCities = () => {
         bordered
         rowKey="id"
         pagination={{
-          pageSize: 8,
+          pageSize: 7,
           showSizeChanger: false,
           hideOnSinglePage: true,
           size: 'small',
