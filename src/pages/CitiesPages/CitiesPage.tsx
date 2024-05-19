@@ -30,27 +30,28 @@ const CitiesPages = () => {
     <div className={styles.container}>
       <div className={styles.containerHeader}>
         <div className={styles.containerSearch}>
-          <Input className={styles.input} value={search} onChange={setSearch} />
+          <Input className={styles.input} value={search} placeholder='Поиск' onChange={setSearch} />
           <Button onClick={() => setSearch('')}>Очистить</Button>
         </div>
         <div className={styles.filterContain}>
-          <p>Столица</p>
-          <CheckBox value={isCapital} onChange={setIsCapital}></CheckBox>
           {countries.countries.length && (
             <MultiDropdown
-              options={countries.countries.map((c) => {
-                return { key: String(c.id), value: c.name };
-              })}
-              value={countryIds
-                .map((id) => {
-                  return countries.countries.find((c) => c.id === id);
-                })
-                .filter(truthy)
-                .map((c) => ({ key: String(c.id), value: c.name }))}
+            options={countries.countries.map((c) => {
+              return { key: String(c.id), value: c.name };
+            })}
+            value={countryIds
+              .map((id) => {
+                return countries.countries.find((c) => c.id === id);
+              })
+              .filter(truthy)
+              .map((c) => ({ key: String(c.id), value: c.name }))}
               onChange={(options) => setCountryIds(options.map((c) => parseInt(c.key)))}
-              getTitle={(options) => options.map((o) => o.value).join(', ')}
-            />
-          )}
+              getTitle={(options) => options.length ? options.map((o) => o.value).join(', ') : 'Страна'}
+              
+              />
+            )}
+            <p>Столица</p>
+            <CheckBox value={isCapital} onChange={setIsCapital}></CheckBox>
         </div>
       </div>
       <div className={styles.containerCard}>
