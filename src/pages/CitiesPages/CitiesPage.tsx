@@ -1,32 +1,29 @@
-import Card from 'components/Card';
+import React, { useMemo } from 'react';
+import Card from '../../components/Card';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Meta } from 'utils/meta';
-import { City } from 'utils/fieldType';
-import { cities } from 'store/CityDataStore';
-import Input from 'components/Input';
-import Button from 'components/Button';
-import CheckBox from 'components/CheckBox';
-import Pagination from 'components/Pagination';
-import Loader from 'components/Loader';
+import { Meta } from '../../utils/meta';
+import { City } from '../../utils/fieldType';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import CheckBox from '../../components/CheckBox';
+import Pagination from '../../components/Pagination';
+import Loader from '../../components/Loader';
+import MultiDropdown from '../../components/MultiDropdown';
+import { countries } from '../../store/CountriesStore';
+import { truthy } from '../../utils/truthy';
+import { useFilters } from '../../hooks/useFilters';
 import styles from './CitiesPage.module.scss';
-import { usePage } from 'hooks/usePage';
-import MultiDropdown from 'components/MultiDropdown';
-import { countries } from 'store/CountriesStore';
-import { useCountriesFilter } from 'hooks/useCountriesFilter';
-import { truthy } from 'utils/truthy';
-import { useIsCapital } from 'hooks/useIsCapital';
-import { useSearch } from 'hooks/useSearch';
+import CitiesLocalStore from './CitiesLocalStore';
 
 const CitiesPages = () => {
-  const [countryIds, setCountryIds] = useCountriesFilter();
-  const [page, setPage] = usePage();
-  const [isCapital, setIsCapital] = useIsCapital();
-  const [search, setSearch] = useSearch();
+  const citiesLocalStore = useMemo(() => new CitiesLocalStore(), []);
+  const { page, isCapital, search, countryIds, setPage, setSearch, setIsCapital, setCountryIds } = useFilters();
+
 
   useEffect(() => {
-    cities.getCities({ page, countryIds, isCapital, search });
+    citiesLocalStore.getCities({ page, countryIds, isCapital, search });
     countries.getCountries();
   }, [page, countryIds, isCapital, search]);
 
@@ -59,15 +56,15 @@ const CitiesPages = () => {
       </div>
       <div className={styles.containerCard}>
         <div className={styles.containerCardText}>
-          <h2>Популярные города</h2>
+          <h2>Города</h2>
         </div>
-        {cities.meta === Meta.loading ? (
+        {citiesLocalStore.meta === Meta.loading ? (
           <div className={styles.loading}>
             <Loader />
           </div>
-        ) : cities.cities.length ? (
+        ) : citiesLocalStore.cities.length ? (
           <>
-            {cities.cities.map((c: City) => (
+            {citiesLocalStore.cities.map((c: City) => (
               <div className={styles.cardBlock} key={c.id}>
                 <Link to={`city/${c.id}`}>
                   <Card className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
@@ -80,12 +77,12 @@ const CitiesPages = () => {
         )}
       </div>
       <div>
-        {cities.meta === Meta.loading ? (
+        {citiesLocalStore.meta === Meta.loading ? (
           <span></span>
         ) : (
-          cities.count > 0 && (
+          citiesLocalStore.count > 0 && (
             <div className={styles.containerPagination}>
-              <Pagination limit={cities.LIMIT} count={cities.count} page={page} onChange={setPage} />
+              <Pagination limit={citiesLocalStore.LIMIT} count={citiesLocalStore.count} page={page} onChange={setPage} />
             </div>
           )
         )}

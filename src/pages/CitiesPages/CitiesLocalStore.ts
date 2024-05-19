@@ -1,5 +1,4 @@
 import {
-  DocumentData,
   collection,
   getCountFromServer,
   getDocs,
@@ -11,16 +10,15 @@ import {
   where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { City } from 'utils/fieldType';
-import app from 'utils/firebase';
-import { Meta } from 'utils/meta';
+import { City } from '../../utils/fieldType';
+import app from '../../utils/firebase';
+import { Meta } from '../../utils/meta';
 
-type PrivateValue = '_cities' | '_meta' | '_city';
+type PrivateValue = '_cities' | '_meta';
 
-export default class CityDataStore {
+export default class CitiesLocalStore {
   private _cities: City[] = [];
   private _meta: Meta = Meta.initial;
-  private _city: DocumentData = [];
 
   query: string = '';
   isCapital = false;
@@ -28,18 +26,15 @@ export default class CityDataStore {
   LIMIT = 8;
 
   constructor() {
-    makeObservable<CityDataStore, PrivateValue>(this, {
+    makeObservable<CitiesLocalStore, PrivateValue>(this, {
       _cities: observable,
       _meta: observable,
-      _city: observable,
       query: observable,
       count: observable,
       isCapital: observable,
       cities: computed,
       meta: computed,
-      city: computed,
       getCities: action,
-      getCity: action,
       setSearchQuery: action,
       setCapitalFilter: action,
     });
@@ -51,10 +46,6 @@ export default class CityDataStore {
 
   get meta() {
     return this._meta;
-  }
-
-  get city() {
-    return this._city;
   }
 
   setSearchQuery = (query: string) => {
@@ -121,25 +112,4 @@ export default class CityDataStore {
       return;
     }
   };
-
-  getCity = async (id: number) => {
-    this._meta = Meta.loading;
-    this._city = [];
-
-    const db = getFirestore(app);
-    const docRef = query(collection(db, 'cities'), where('id', '==', id), limit(1));
-    const docSnap = await getDocs(docRef);
-    if (docSnap.docs[0].exists()) {
-      runInAction(() => {
-        this._meta = Meta.success;
-        this._city = docSnap.docs[0].data();
-      });
-    } else {
-      runInAction(() => {
-        this._meta = Meta.error;
-      });
-    }
-  };
 }
-
-export const cities = new CityDataStore();

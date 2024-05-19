@@ -1,4 +1,4 @@
-import { FormValue } from 'components/Form/Form';
+import { FormValue } from '../../components/Form/Form';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import {
   User,

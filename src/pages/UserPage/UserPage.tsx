@@ -1,8 +1,9 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserPage.module.scss';
-import Button from 'components/Button';
+import Button from '../../components/Button';
 import { LeftOutlined } from '@ant-design/icons';
-import { authStore } from 'store/AuthStore';
+import { authStore } from '../../store/AuthStore';
 import user from '../../fonts/img/user.jpeg';
 import { observer } from 'mobx-react-lite';
 

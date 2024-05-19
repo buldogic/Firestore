@@ -1,0 +1,38 @@
+@import "../../styles/colorMixin.scss";
+
+
+
+.buttonNoLike {
+  font-size: 34px;
+  color: $likeNo;
+  transform: scale(1);
+  animation: pulseNo 1s ease-in-out;
+}
+.buttonYesLike {
+  font-size: 34px;
+  color: $likeYes;
+  transform: scale(1);
+  animation: pulseYes 1s ease-in-out;
+}
+@keyframes pulseYes {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+  @keyframes pulseNo {
+    from {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    to {
+      transform: scale(1);
+    }
+  }

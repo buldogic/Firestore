@@ -1,4 +1,5 @@
-import Button from 'components/Button';
+import React, { useCallback } from 'react';
+import Button from '../../components/Button';
 import cn from 'classnames';
 import styles from './Pagination.module.scss';
 
@@ -14,7 +15,7 @@ const Pagination = (props: Props) => {
 
   return (
     <div className={styles.root}>
-      <Button onClick={() => props.onChange(Math.max(props.page - 1, 0))}>←</Button>
+      <Button onClick={() => props.onChange(Math.max(props.page - 1, 0)) }>←</Button>
       <div className={styles.pages}>
         {Array.from({ length: countPages }).map((_, i) => (
           <Button key={i} className={cn(props.page === i && styles.active)} onClick={() => props.onChange(i)}>

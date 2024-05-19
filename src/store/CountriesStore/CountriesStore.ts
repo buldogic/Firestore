@@ -1,8 +1,8 @@
 import { DocumentData, collection, getDocs, getFirestore, limit, query, where } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { Country } from 'utils/fieldType';
-import app from 'utils/firebase';
-import { Meta } from 'utils/meta';
+import { Country } from '../../utils/fieldType';
+import app from '../../utils/firebase';
+import { Meta } from '../../utils/meta';
 
 type PrivateValue = '_countries' | '_meta' | '_country';
 
@@ -15,7 +15,7 @@ export default class CountriesStore {
 
   constructor() {
     makeObservable<CountriesStore, PrivateValue>(this, {
-      _countries: observable,
+      _countries: observable.shallow,
       _meta: observable,
       _country: observable,
       query: observable,
@@ -86,6 +86,10 @@ export default class CountriesStore {
         this._meta = Meta.error;
       });
     }
+  };
+
+  getLocalCountry = (id: number) => {
+    return this._countries.find((c) => c.id === id) ?? null
   };
 }
 

@@ -1,4 +1,4 @@
-@import "../../../styles/colorMixin.scss";
+@import "../../styles/colorMixin.scss";
 .root {
   padding: 2rem 3rem;
 }
@@ -31,4 +31,15 @@
 .textName {
   font-size: 44px;
   font-weight: 400;
+}
+
+.iconBack {
+  font-size: 34px;
+  color: $primary-active;
+}
+
+.header{ 
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

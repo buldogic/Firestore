@@ -1,7 +1,8 @@
-@import "../../../styles/styles.css";
+@import "../../styles/styles.css";
 
 .root {
   position: relative;
+  z-index: 1;
 }
 
 .multi-dropdown {

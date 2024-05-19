@@ -1,4 +1,5 @@
-import Login from 'components/Form/Login';
+import React from 'react';
+import Login from '../../components/Form/Login';
 import styles from './LoginPage.module.scss';
 
 const LoginPage = () => {

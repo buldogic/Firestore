@@ -2,6 +2,7 @@ import React from 'react';
 import Text from '../Text';
 import cn from 'classnames';
 import styles from './Card.module.scss';
+import Like from '../Like';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -26,11 +27,14 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
   const { className, image, captionSlot, title, subtitle, contentSlot, onClick, actionSlot } = props;
 
   return (
-    <div className={cn(className, styles.Card)} onClick={onClick}>
+    <div className={cn(className, styles.card)} onClick={onClick}>
       <div className={styles.cardImg}>
         <img className={styles.img} src={image} alt="Card" />
+        <div className={styles.like}>
+          <Like/>
+        </div>
       </div>
-      <div className={styles.CardContent}>
+      <div className={styles.cardContent}>
         {captionSlot && (
           <Text color={'secondary'} weight={'medium'} view={'p-14'}>
             {captionSlot}
@@ -43,7 +47,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
         <Text maxLines={3} view={'p-16'} weight={'normal'} color={'secondary'}>
           {subtitle}
         </Text>
-        <div className={styles.CardActions}>
+        <div className={styles.cardActions}>
           {contentSlot && (
             <Text view={'p-18'} weight={'bold'}>
               {contentSlot}

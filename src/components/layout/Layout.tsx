@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import city from './city.png';
 import styles from './Layout.module.scss';
-import { authStore } from 'store/AuthStore';
+import { authStore } from '../../store/AuthStore';
 import { observer } from 'mobx-react-lite';
 
 const Layout: React.FC = () => {
@@ -20,7 +20,7 @@ const Layout: React.FC = () => {
           </NavLink>
         </div>
         <div>
-          <NavLink className={styles.link} to="country">
+          <NavLink className={styles.link} to="countries">
             Страны
           </NavLink>
         </div>
