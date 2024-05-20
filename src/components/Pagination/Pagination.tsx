@@ -13,9 +13,17 @@ type Props = {
 const Pagination = (props: Props) => {
   const countPages = Math.ceil(props.count / props.limit);
 
+  const handleClickNext = useCallback(() => {
+    return props.onChange(Math.max(props.page - 1, 0));
+  }, [props.onChange]);
+
+  const handleClickPrev = useCallback(() => {
+    return props.onChange(Math.min(props.page + 1, countPages - 1));
+  }, [props.onChange]);
+
   return (
     <div className={styles.root}>
-      <Button onClick={() => props.onChange(Math.max(props.page - 1, 0)) }>←</Button>
+      <Button onClick={handleClickNext}>←</Button>
       <div className={styles.pages}>
         {Array.from({ length: countPages }).map((_, i) => (
           <Button key={i} className={cn(props.page === i && styles.active)} onClick={() => props.onChange(i)}>
@@ -23,7 +31,7 @@ const Pagination = (props: Props) => {
           </Button>
         ))}
       </div>
-      <Button onClick={() => props.onChange(Math.min(props.page + 1, countPages - 1))}>→</Button>
+      <Button onClick={handleClickPrev}>→</Button>
     </div>
   );
 };

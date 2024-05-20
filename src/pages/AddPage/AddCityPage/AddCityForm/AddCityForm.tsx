@@ -18,7 +18,7 @@ const initialValues = {
   population: '',
   sight: '',
 };
-const apruveAdd = (v: boolean | null) => {
+const approveAdd = (v: boolean | null) => {
   switch (v) {
     case null:
       return 'Добавление города';
@@ -38,7 +38,7 @@ const AddCityForm = () => {
       const country = countries.getLocalCountry(values.countryId);
       if (country === null) return;
       await cityStoreAdmin.createCity({ ...values, country: country.name });
-      if (cityStoreAdmin.meta === Meta.success) {
+      if (cityStoreAdmin.createCityStore === Meta.success) {
         setNotification(true);
         form.resetFields();
         setTimeout(() => {
@@ -57,9 +57,10 @@ const AddCityForm = () => {
         <CityForm
           form={form}
           onFinish={onFinish}
-          title={apruveAdd(notification)}
+          title={approveAdd(notification)}
           countries={countries.countries}
           initialValues={initialValues}
+          buttonTitle='Добавить'
         />
       </div>
     </>

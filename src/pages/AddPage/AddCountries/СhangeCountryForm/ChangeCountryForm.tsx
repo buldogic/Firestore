@@ -2,22 +2,18 @@ import React, { memo, useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { Form } from 'antd';
 import { Meta } from '../../../../utils/meta';
-import { cityStoreAdmin } from '../CityStoreAdmin';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
-import styles from './СhangeCityForm.module.scss';
-
-import CityForm, { CityFormValues } from '../../../../components/Form/City/City';
 import { countries } from '../../../../store/CountriesStore';
+import Country, { CountryFormValues } from '../../../../components/Form/Country';
+import { countryStoreAdmin } from '../CountryStoreAdmin';
+import styles from './ChangeCountryForm.module.scss';
 
 const initialValues = {
-  countryId: undefined,
   name: '',
-  is_capital: false,
   description: '',
   img: '',
   population: '',
-  sight: '',
 };
 
 type Props = {
@@ -28,7 +24,7 @@ type Props = {
 const approveAdd = (v: boolean | null) => {
   switch (v) {
     case null:
-      return 'Редактирование города';
+      return 'Редактирование страны';
     case true:
       return <CheckOutlined />;
     case false:
@@ -41,17 +37,15 @@ const СhangeCityForm = (props: Props) => {
   const [notification, setNotification] = useState<null | boolean>(null);
 
   useEffect(() => {
-    const city = cityStoreAdmin.getStoredCity(props.id);
-    if (city === null) throw new Error('City lost');
-    form.setFieldsValue(city);
+    const country = countryStoreAdmin.getStoredCountry(props.id);
+    if (country === null) throw new Error('City lost');
+    form.setFieldsValue(country);
   }, [props.id]);
 
   const onFinish = useCallback(
-    async (values: CityFormValues) => {
-      const country = countries.getLocalCountry(values.countryId);
-      if (country === null) return;
-      await cityStoreAdmin.updateCity({ ...values, id: props.id, country: country.name });
-      if (cityStoreAdmin.updateCityMeta === Meta.success) {
+    async (values: CountryFormValues) => {
+      await countryStoreAdmin.updateCountry({ ...values, id: props.id});
+      if (countryStoreAdmin.updateCityMeta === Meta.success) {
         setNotification(true);
         setTimeout(() => {
           setNotification(null);
@@ -61,17 +55,15 @@ const СhangeCityForm = (props: Props) => {
         setNotification(false);
       }
     },
-    [countries, cityStoreAdmin, setNotification, props.onClose],
+    [ countryStoreAdmin, setNotification, props.onClose],
   );
 
   return (
     <div className={styles.container}>
-      <CityForm
-
+      <Country
         form={form}
         onFinish={onFinish}
         title={approveAdd(notification)}
-        countries={countries.countries}
         initialValues={initialValues}
         buttonTitle='Редактировать'
       />

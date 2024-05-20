@@ -16,23 +16,27 @@ import { addCity } from '../../../../utils/fieldType';
 import app from '../../../../utils/firebase';
 import { Meta } from '../../../../utils/meta';
 
-type PrivateValue = '_meta' | '_cities' | '_updarteCityMeta';
+type PrivateValue = '_meta' | '_cities' | '_updarteCityMeta' | '_createCityMeta';
 
 export default class CityStoreAdmin {
   private _meta: Meta = Meta.initial;
   private _cities: addCity[] = [];
   private _updarteCityMeta = Meta.initial;
+  private _createCityMeta = Meta.initial
 
   constructor() {
     makeObservable<CityStoreAdmin, PrivateValue>(this, {
+      _createCityMeta:observable,
       _meta: observable,
       _updarteCityMeta: observable,
       _cities: observable.shallow,
       cities: computed,
+      createCityStore: computed,
       updateCityMeta: computed,
       meta: computed,
       createCity: action,
       getCities: action,
+      
     });
   }
 
@@ -45,7 +49,7 @@ export default class CityStoreAdmin {
   }
 
   createCity = async (city: Omit<addCity, 'id'>) => {
-    this._meta = Meta.loading;
+    this._createCityMeta = Meta.loading;
 
     const db = getFirestore(app);
     const citiesRef = query(collection(db, 'cities'), orderBy('id', 'desc'), limit(1));
@@ -53,13 +57,17 @@ export default class CityStoreAdmin {
     const id = citiesSnap.docs[0].exists() ? citiesSnap.docs[0].data().id + 1 : 1;
     try {
       await setDoc(doc(db, 'cities', String(id)), { id, ...city });
-      this._meta = Meta.success;
+      this._createCityMeta = Meta.success;
     } catch (error) {
-      this._meta = Meta.error;
+      this._createCityMeta = Meta.error;
       console.error('Ошибка при добавлении города в базу данных Firestore:', error);
     }
     this.getCities();
   };
+
+  get createCityStore ()  {
+    return this._createCityMeta
+  }
 
   getCities = async () => {
     const db = getFirestore(app);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Modal, Space, Table, Tooltip } from 'antd';
 import { Country } from '../../../../utils/fieldType';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -6,22 +6,23 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import styles from './TableCountries.module.scss';
 import { observer } from 'mobx-react-lite';
 import { countryStoreAdmin } from '../CountryStoreAdmin';
+import ChangeCountryForm from '../СhangeCountryForm/ChangeCountryForm';
 
 const { Column } = Table;
 
 const TableCountries = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [idCity, setIdCity] = useState<number | undefined>(undefined);
+  const [countryIdForUpdate, setCountryIdForUpdate] = useState<number | undefined>(undefined);
 
-  const showModal = (id: number) => {
-    setIdCity(id);
-    setIsModalOpen(true);
-  };
+  const showModal = useCallback(
+    (id: number) => {
+      setCountryIdForUpdate(id);
+    },
+    [setCountryIdForUpdate],
+  );
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setIdCity(undefined);
-  };
+  const handleCancel = useCallback(() => {
+    setCountryIdForUpdate(undefined);
+  }, [setCountryIdForUpdate]);
 
   return (
     <div>
@@ -71,8 +72,14 @@ const TableCountries = () => {
         />
       </Table>
       <div className={styles.addButton}>
-        <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
-          {/* <СhangeCityForm id={idCity} /> */}
+        <Modal
+          width={'auto'}
+          className={styles.modal}
+          footer={null}
+          open={countryIdForUpdate !== undefined}
+          onCancel={handleCancel}
+        >
+          {countryIdForUpdate && <ChangeCountryForm onClose={handleCancel} id={countryIdForUpdate} />}
         </Modal>
       </div>
     </div>

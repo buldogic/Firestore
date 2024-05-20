@@ -1,17 +1,14 @@
 import React, { memo } from 'react';
-import { Button, Checkbox, Form, FormInstance, FormProps, Input, InputNumber, Select } from 'antd';
+import { Button, Form, FormInstance, FormProps, Input, InputNumber } from 'antd';
 import z from 'zod';
-import styles from './City.module.scss';
-import { Country, FieldType } from '../../../utils/fieldType';
+import { FieldType } from '../../../utils/fieldType';
+import styles from './Country.module.scss';
 
-const shemeCity = z.object({
-  countryId: z.number().int().positive(),
+const shemeCountry = z.object({
   name: z.string(),
-  is_capital: z.boolean(),
   description: z.string(),
   img: z.string(),
   population: z.coerce.number(),
-  sight: z.string(),
 });
 
 const formItemLayout = {
@@ -29,31 +26,26 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-export type CityFormValues = {
-  countryId: number;
+export type CountryFormValues = {
   name: string;
-  is_capital: boolean;
   description: string;
   img: string;
   population: number;
-  sight: string;
 };
 
 type Props = {
-  onFinish: (v: CityFormValues) => Promise<void>;
+  onFinish: (v: CountryFormValues) => Promise<void>;
   title: React.ReactNode;
-  initialValues: Omit<CityFormValues, 'countryId' | 'population'> & {
-    countryId: number | undefined;
+  initialValues: Omit<CountryFormValues, 'population'> & {
     population: string;
   };
-  countries: Country[];
   form: FormInstance;
   buttonTitle: string;
 };
 
 const CityForm = (props: Props) => {
   const onFinish = async (values: unknown) => {
-    const result = shemeCity.safeParse(values);
+    const result = shemeCountry.safeParse(values);
     if (!result.success) return;
     await props.onFinish(result.data);
   };
@@ -72,29 +64,11 @@ const CityForm = (props: Props) => {
           {...formItemLayout}
         >
           <Form.Item
-            name="countryId"
+            name="name"
             label="Название Страны"
             rules={[{ required: true, message: 'Пожалуйста введите название страны!' }]}
           >
-            <Select placeholder="Select a option and change input text above" allowClear>
-              {props.countries.map((c) => (
-                <Select.Option key={c.id} value={c.id}>
-                  {c.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item valuePropName="checked" label="Столица Страны" name="is_capital">
-            <Checkbox defaultChecked={false} />
-          </Form.Item>
-
-          <Form.Item
-            label="Название Города"
-            name="name"
-            rules={[{ required: true, message: 'Пожалуйста введите название города!' }]}
-          >
-            <Input style={{ width: '100%' }} />
+            <Input  style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item
@@ -121,17 +95,9 @@ const CityForm = (props: Props) => {
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item
-            label="Достопримечательности"
-            name="sight"
-            rules={[{ required: true, message: 'Пожалуйста введите достопримечательности города!' }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item className={styles.button} wrapperCol={{ offset: 12, span: 16 }}>
+          <Form.Item  className={styles.button} wrapperCol={{ offset: 12, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              {props.buttonTitle}
+             {props.buttonTitle}
             </Button>
           </Form.Item>
         </Form>

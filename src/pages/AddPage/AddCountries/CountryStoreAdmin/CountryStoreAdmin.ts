@@ -1,10 +1,10 @@
-import { collection, deleteDoc, doc, getDocs, getFirestore, limit, orderBy, query, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, getFirestore, limit, orderBy, query, setDoc, updateDoc } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { Country } from '../../../../utils/fieldType';
 import app from '../../../../utils/firebase';
 import { Meta } from '../../../../utils/meta';
 
-type PrivateValue = '_createCountryMeta' | '_getCountriesMeta' | '_deleteCountryMeta' | '_countries';
+type PrivateValue = '_createCountryMeta' | '_getCountriesMeta' | '_deleteCountryMeta' | '_countries' | '_updateCountryMeta';
 
 export default class CountryStoreAdmin {
   private _countries: Country[] = [];
@@ -12,13 +12,16 @@ export default class CountryStoreAdmin {
   private _createCountryMeta = Meta.initial;
   private _getCountriesMeta = Meta.initial;
   private _deleteCountryMeta = Meta.initial;
+  private _updateCountryMeta = Meta.initial;
 
   constructor() {
     makeObservable<CountryStoreAdmin, PrivateValue>(this, {
+      _updateCountryMeta: observable,
       _countries: observable.shallow,
       countries: computed,
       createCountry: action,
       getCountries: action,
+      updateCityMeta: computed,
       _createCountryMeta: observable,
       _getCountriesMeta: observable,
       _deleteCountryMeta: observable,
@@ -75,6 +78,10 @@ export default class CountryStoreAdmin {
     }
   };
 
+  getStoredCountry = (id: number) => {
+      return this._countries.find((c) => c.id === id) ?? null
+  }
+
   get getCountriesMeta() {
     return this._getCountriesMeta;
   }
@@ -87,6 +94,17 @@ export default class CountryStoreAdmin {
 
   get deleteCountryMeta() {
     return this._deleteCountryMeta;
+  }
+
+  updateCountry = async (country: Country) => {
+    this._updateCountryMeta = Meta.loading;
+    const db = getFirestore(app);
+    await updateDoc(doc(db, 'countries', String(country.id)), country);
+    this._updateCountryMeta = Meta.success;
+    this.getCountries();
+  };
+  get updateCityMeta() {
+    return this._updateCountryMeta;
   }
 }
 
