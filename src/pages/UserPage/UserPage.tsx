@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './UserPage.module.scss';
 import Button from '../../components/Button';
@@ -6,22 +6,91 @@ import { LeftOutlined } from '@ant-design/icons';
 import { authStore } from '../../store/AuthStore';
 import user from '../../fonts/img/user.jpeg';
 import { observer } from 'mobx-react-lite';
+import LocalStore from './LocalStore';
+import { Modal } from 'antd';
+import UpdateUser from './UpdateUser/UpdateUser';
+import { countries } from '../../store/CountriesStore';
+import Loader from '../../components/Loader';
 
 const UserPage = () => {
+  const localStore = useMemo(() => new LocalStore(), []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
 
+  useEffect(() => {
+    if (!authStore.session) return;
+    localStore.getUser(authStore.session.uid);
+    countries.getCountries();
+  }, []);
+
+  if (localStore.user === null) return <Loader />;
 
   return (
     <div className={styles.root}>
-        <div className={styles.goBack} onClick={goBack}>
-           <LeftOutlined /> Назад{' '}
+      <div className={styles.goBack} onClick={goBack}>
+        <LeftOutlined /> Назад{' '}
+      </div>
+      <div className={styles.container}>
+        <div>
+          {localStore.user.img ? (
+            <img className={styles.img} src={localStore.user.img} alt="Avatar" />
+          ) : (
+            <img className={styles.img} src={user} alt="Avatar" />
+          )}
         </div>
-      <div className={styles.contactUser}>
-        <img className={styles.img} src={user} alt="Avatar" />
-        <div>{authStore.user?.email}</div>
-        <Button onClick={authStore.signOut}>Выйти</Button>
+        <div>
+          <p>
+            <span>
+              <b>Почта</b>
+            </span>
+            : {localStore.user.email ?? 'Почта не указана'}
+          </p>
+        </div>
+        <div>
+          <p>
+            {' '}
+            <span>
+              <b>Имя</b>
+            </span>
+            : {localStore.user.name ?? 'Имя не указано'}
+          </p>
+        </div>
+        <div>
+          <p>
+            <span>
+              <b>Фамилия</b>
+            </span>
+            : {localStore.user.surname ?? 'Фамилия не указана'}
+          </p>
+        </div>
+        <div>
+          <p>
+            <span>
+              <b>Страна</b>
+            </span>
+            : {localStore.user.country ?? 'Страна не указана'}
+          </p>
+        </div>
+        <div>
+          <Button onClick={showModal}> Редактировать профиль</Button>
+        </div>
+        <div>
+          <Button onClick={authStore.signOut}>Выйти</Button>
+        </div>
+        <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
+          {authStore.session && <UpdateUser store={localStore} id={authStore.session.uid} onClose={handleCancel} />}
+        </Modal>
       </div>
     </div>
   );

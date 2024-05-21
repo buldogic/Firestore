@@ -7,38 +7,51 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
+import app from '../../utils/firebase';
+import { doc, getFirestore, setDoc } from 'firebase/firestore';
 
 const adminEmails = ['adminuser@citiy.com'];
 
 type UserOrAdmin = User & { isAdmin: boolean };
 
-type PrivateValue = '_user';
+type PrivateValue = '_session';
 
 class AuthStore {
-  _user: undefined | null | UserOrAdmin = undefined;
+  _session: undefined | null | UserOrAdmin = undefined;
 
   constructor() {
     makeObservable<AuthStore, PrivateValue>(this, {
-      _user: observable,
+      _session: observable.shallow,
       handleLogin: action,
       handleRigister: action,
-      user: computed,
+      session: computed,
     });
 
     const auth = getAuth();
+
     onAuthStateChanged(auth, (user) => {
       runInAction(() => {
         if (user) {
-          this._user = { ...user, isAdmin: adminEmails.includes(user.email ?? '') };
+          this._session = { ...user, isAdmin: adminEmails.includes(user.email ?? '') };
         } else {
-          this._user = null;
+          this._session = null;
         }
       });
     });
   }
 
-  get user() {
-    return this._user;
+  addUser = async (user: undefined | null | User) => {
+    if (user === null || user === undefined) return;
+    const db = getFirestore(app);
+    try {
+      await setDoc(doc(db, 'users', user.uid), { email: user.email, id: user.uid });
+    } catch (error) {
+      console.error('Ошибка при добавлении страны в базу данных Firestore:', error);
+    }
+  };
+
+  get session() {
+    return this._session;
   }
 
   handleLogin = (dataLogin: FormValue) => {
@@ -49,6 +62,7 @@ class AuthStore {
   handleRigister = (dataLogin: FormValue) => {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, dataLogin.email, dataLogin.password);
+    this.addUser(auth.currentUser ?? null);
   };
 
   signOut = () => {

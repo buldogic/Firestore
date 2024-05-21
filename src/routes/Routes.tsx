@@ -13,11 +13,12 @@ import CountryPage from '../pages/CountryPage';
 import CitiesPages from '../pages/CitiesPages';
 import AddCountries from '../pages/AddPage/AddCountries';
 import CountriesPage from '../pages/CountriesPage';
+import UserPageAdmin from '../pages/AddPage/UserPage/UserPage';
 
 const Rout = () => {
-  if (authStore._user === undefined) return null;
+  if (authStore._session === undefined) return null;
 
-  if (authStore._user === null) {
+  if (authStore._session === null) {
     return (
       <Routes>
         <Route path="/login" element={<LoginPage />} />
@@ -39,11 +40,12 @@ const Rout = () => {
 
         <Route path="user" element={<UserPage />} />
       </Route>
-      {authStore._user.isAdmin && (
+      {authStore._session.isAdmin && (
         <Route path="/admin" element={<AdminPage />}>
-          <Route index element={<Navigate to="/admin/cities" />}/>
-          <Route path='cities' element={<AddCityPage />} />
+          <Route index element={<Navigate to="/admin/cities" />} />
+          <Route path="cities" element={<AddCityPage />} />
           <Route path="countries" element={<AddCountries />} />
+          <Route path="users" element={<UserPageAdmin />} />
         </Route>
       )}
       <Route path="*" element={<Navigate to="/" />} />

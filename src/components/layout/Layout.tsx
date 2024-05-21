@@ -29,7 +29,7 @@ const Layout: React.FC = () => {
             Профиль
           </NavLink>
         </div>
-        {authStore._user?.isAdmin && (
+        {authStore._session?.isAdmin && (
           <div>
             <NavLink className={styles.link} to="/admin">
               Админ

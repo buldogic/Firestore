@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
+import { Normalize } from '../utils/normolaizText';
 
 const schema = z.string();
 
@@ -11,7 +12,7 @@ export const useSearch = () => {
 
   const search = useMemo(() => {
     const serializedSearch = searchParams.get(KEY ?? '');
-    const searchStr = schema.safeParse(serializedSearch);
+    const searchStr = schema.safeParse(Normalize(serializedSearch));
     if (searchStr.success) return searchStr.data;
     return '';
   }, [searchParams]);

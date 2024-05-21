@@ -4,6 +4,17 @@ export type FieldType = {
   handleClick?: (data: FieldType) => void;
 };
 
+export type User = {
+  id:string,
+  name: string,
+  surname: string,
+  email: string,
+  // likeCity: [],
+  // likeCountry:[],
+  country: string,
+  img: string,
+}
+
 export type City = {
   id: number;
   name: string;

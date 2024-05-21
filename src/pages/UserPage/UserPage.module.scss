@@ -2,6 +2,7 @@
 
 .root {
   padding: 48px;
+
 }
 
 .main {
@@ -15,13 +16,13 @@
   border-radius: 50%;
   background-color: $secondary;
 }
-.contactUser {
+.container {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
 .goBack {
