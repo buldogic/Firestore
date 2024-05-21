@@ -13,6 +13,7 @@ export type User = {
   // likeCountry:[],
   country: string,
   img: string,
+  like?: [],
 }
 
 export type City = {
@@ -24,6 +25,7 @@ export type City = {
   population: number;
   sight: string;
   country: string;
+  like:boolean;
 };
 
 export type Country = {

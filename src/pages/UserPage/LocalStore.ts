@@ -1,35 +1,30 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  getFirestore,
-  limit,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore';
+import { collection, doc, getDocs, getFirestore, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { User } from '../../utils/fieldType';
+import { City, User } from '../../utils/fieldType';
 import app from '../../utils/firebase';
 import { Meta } from '../../utils/meta';
 
-type PrivateValue = '_meta' | '_user' | '_updateUserMeta';
+type PrivateValue = '_meta' | '_user' | '_updateUserMeta' | '_likeCity';
 
 export default class LocalStore {
   private _meta: Meta = Meta.initial;
   private _user: User | null = null;
   private _updateUserMeta = Meta.initial;
+  private _likeCity: City[] | null = null;
 
   constructor() {
     makeObservable<LocalStore, PrivateValue>(this, {
       _updateUserMeta: observable,
+      _likeCity: observable,
       _meta: observable,
       _user: observable,
       updateUserMeta: computed,
+      likeCity: computed,
       user: computed,
       meta: computed,
       getUser: action,
       updateUser: action,
+      getUserCityLike: action,
     });
   }
 
@@ -39,6 +34,10 @@ export default class LocalStore {
 
   get meta() {
     return this._meta;
+  }
+
+  get likeCity() {
+    return this._likeCity;
   }
 
   updateUser = async (user: User) => {
@@ -69,7 +68,23 @@ export default class LocalStore {
         this._meta = Meta.success;
         this._user = response[0] as User;
       });
-      return;
+
+      this.getUserCityLike();
     }
+  };
+
+  getUserCityLike = async () => {
+    if (this._user === null) return;
+    const db = getFirestore(app);
+    const q = query(collection(db, 'cities'), where('id', 'in', this._user.like));
+
+    const citySnapshot = await getDocs(q);
+    const response = citySnapshot.docs.map((doc) => {
+      return doc.data();
+    });
+    runInAction(() => {
+      this._likeCity = response as City[];
+      console.log(this._likeCity)
+    });
   };
 }

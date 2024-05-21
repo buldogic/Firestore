@@ -2,13 +2,6 @@
 
 .root {
   padding: 48px;
-
-}
-
-.main {
-  display: flex;
-  margin-left: 100px;
-  gap: 58px;
 }
 .img {
   width: 100px;
@@ -16,13 +9,47 @@
   border-radius: 50%;
   background-color: $secondary;
 }
-.container {
+.containerInfoProfile {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 24px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.containerInfo {
+  display: flex;
+  padding: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1 solid $secondary;
+  background-color: $white;
+  border-radius: 10px;
+  gap: 24px;
+}
+
+.textInfoGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 400px;
+  gap: 24px;
+}
+
+.link{ 
+  color: $primary;
+}
+
+.textTitle {
+  font-weight: 700;
 }
 
 .goBack {
@@ -41,4 +68,10 @@
   &:active {
     color: $primary-active;
   }
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
