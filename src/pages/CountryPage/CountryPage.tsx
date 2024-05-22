@@ -40,7 +40,6 @@ const CountryPage = () => {
     }
   };
 
-  console.log(localStoreCountry.likeCountry);
 
   return (
     <div className={styles.root}>

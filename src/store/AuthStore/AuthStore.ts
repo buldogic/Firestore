@@ -46,7 +46,7 @@ class AuthStore {
     try {
       await setDoc(doc(db, 'users', user.uid), { email: user.email, id: user.uid });
     } catch (error) {
-      console.error('Ошибка при добавлении страны в базу данных Firestore:', error);
+      console.error('Ошибка при добавлении пользователя в базу данных Firestore:', error);
     }
   };
 
