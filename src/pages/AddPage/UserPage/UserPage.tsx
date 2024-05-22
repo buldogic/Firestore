@@ -1,95 +1,40 @@
 import React, { useEffect, useMemo } from 'react';
-import { Button, Modal, Space, Table, Tooltip } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-
-import { useCallback, useState } from 'react';
-import styles from './UserPage.module.scss';
-import { authStore } from '../../../store/AuthStore';
+import { Table } from 'antd';
 import LocalStore from './LocalStorage';
 import { observer } from 'mobx-react-lite';
+import Loader from '../../../components/Loader';
+import styles from './UserPage.module.scss';
 
 const { Column } = Table;
 
 const UserPageAdmin = () => {
-
   const localStore = useMemo(() => new LocalStore(), []);
 
-  const [countryIdForUpdate, setCountryIdForUpdate] = useState<number | undefined>(undefined);
-
-  const showModal = useCallback(
-    (id: number) => {
-      setCountryIdForUpdate(id);
-    },
-    [setCountryIdForUpdate],
-  );
-
-  const handleCancel = useCallback(() => {
-    setCountryIdForUpdate(undefined);
-  }, [setCountryIdForUpdate]);
-
   useEffect(() => {
-    localStore.getUsers()
-  },[])
+    localStore.getUsers();
+  }, []);
 
-  console.log('localStore',localStore)
+  if (localStore.users === null) return <Loader />;
 
   return (
-    <div>
-      <Table
-        // dataSource={[...l.user]}
-        bordered
-        rowKey="id"
-        pagination={{
-          pageSize: 7,
-          showSizeChanger: false,
-          hideOnSinglePage: true,
-          size: 'small',
-        }}
-      >
-        <Column title="Страна" dataIndex="name" key="name" />
-        <Column title="Население" dataIndex="population" key="population" />
-        <Column
-          title="Описание"
-          dataIndex="description"
-          ellipsis={{ showTitle: false }}
-          key="description"
-          render={(description) => (
-            <Tooltip placement="topLeft" title={description}>
-              {description}
-            </Tooltip>
-          )}
-        />
-
-        {/* <Column
-          title="Action"
-          align="center"
-          key="action"
-          render={(_: any, record: Country) => (
-            <Space size="middle">
-              <Button type="primary" icon={<EditOutlined />} onClick={() => showModal(record.id)} />
-
-              <Button
-                type="primary"
-                danger
-                icon={<DeleteOutlined />}
-                onClick={() => {
-                  countryStoreAdmin.deleteCountry(record.id);
-                }}
-              />
-            </Space>
-          )}
-        /> */}
-      </Table>
-      <div className={styles.addButton}>
-        <Modal
-          width={'auto'}
-          className={styles.modal}
-          footer={null}
-          open={countryIdForUpdate !== undefined}
-          onCancel={handleCancel}
+    <div className={styles.container}>
+      <div className={styles.tableContainer}>
+        <Table
+          dataSource={[...localStore.users]}
+          bordered
+          rowKey="id"
+          pagination={{
+            pageSize: 7,
+            showSizeChanger: false,
+            hideOnSinglePage: true,
+            size: 'small',
+          }}
         >
-          {/* {countryIdForUpdate && <ChangeCountryForm onClose={handleCancel} id={countryIdForUpdate} />} */}
-        </Modal>
+          <Column width={250} title="Имя" dataIndex="name" key="name" />
+          <Column width={250} title="Фамилия " dataIndex="surname" key="surname" />
+          <Column width={250} title="Почта " dataIndex="email" key="email" />
+          <Column width={250} title="Страна " dataIndex="country" key="country" />
+        </Table>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import {
   where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { City, Country } from '../../utils/fieldType';
+import { Country } from '../../utils/fieldType';
 import app from '../../utils/firebase';
 import { Meta } from '../../utils/meta';
 

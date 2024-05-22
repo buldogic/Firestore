@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import Loader from '../../components/Loader';
@@ -26,22 +26,21 @@ const CountryPage = () => {
   }, []);
 
   useEffect(() => {
-    if(!authStore._session) return 
-    localStoreCountry.getIsLikeCountry(authStore._session.uid)
-  }, [localStoreCountry.likeCountry])
-
+    if (!authStore._session) return;
+    localStoreCountry.getIsLikeCountry(authStore._session.uid);
+  }, [localStoreCountry.likeCountry]);
 
   const handleLike = () => {
-    if(!authStore._session) return 
-    localStoreCountry.addUserCountryLike(authStore._session.uid)
+    if (!authStore._session) return;
+    localStoreCountry.addUserCountryLike(authStore._session.uid);
 
     const parsedId = idSchema.safeParse(Number(id));
     if (parsedId.success) {
       localStoreCountry.addCountryLike(parsedId.data);
     }
-    }
+  };
 
-    console.log(localStoreCountry.likeCountry)
+  console.log(localStoreCountry.likeCountry);
 
   return (
     <div className={styles.root}>

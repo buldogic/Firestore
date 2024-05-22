@@ -1,2 +1,2 @@
-export {default} from './SingUp'
-export * from './SingUp'
+export { default } from './SingUp';
+export * from './SingUp';

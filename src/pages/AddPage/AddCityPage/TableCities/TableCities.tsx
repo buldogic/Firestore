@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Button, Modal, Space, Table, Tag, Tooltip } from 'antd';
 import { addCity } from '../../../../utils/fieldType';
 import styles from './TableCities.module.scss';
@@ -12,13 +12,15 @@ const { Column } = Table;
 const TableCities = () => {
   const [cityIdForUpdate, setCityIdForUpdate] = useState<number | undefined>(undefined);
 
-  const showModal = useCallback((id: number) => {
-    setCityIdForUpdate(id);
-  }, [setCityIdForUpdate])
+  const showModal = useCallback(
+    (id: number) => {
+      setCityIdForUpdate(id);
+    },
+    [setCityIdForUpdate],
+  );
 
-  
   const handleCancel = useCallback(() => {
-    setCityIdForUpdate(undefined)
+    setCityIdForUpdate(undefined);
   }, [setCityIdForUpdate]);
 
   return (
@@ -90,7 +92,13 @@ const TableCities = () => {
         />
       </Table>
       <div className={styles.addCityButton}>
-        <Modal width={'auto'} className={styles.modal} footer={null} open={cityIdForUpdate !== undefined} onCancel={handleCancel}>
+        <Modal
+          width={'auto'}
+          className={styles.modal}
+          footer={null}
+          open={cityIdForUpdate !== undefined}
+          onCancel={handleCancel}
+        >
           {cityIdForUpdate && <СhangeCityForm onClose={handleCancel} id={cityIdForUpdate} />}
         </Modal>
       </div>

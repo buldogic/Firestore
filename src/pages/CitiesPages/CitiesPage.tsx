@@ -14,8 +14,8 @@ import MultiDropdown from '../../components/MultiDropdown';
 import { countries } from '../../store/CountriesStore';
 import { truthy } from '../../utils/truthy';
 import { useFilters } from '../../hooks/useFilters';
-import styles from './CitiesPage.module.scss';
 import CitiesLocalStore from './CitiesLocalStore';
+import styles from './CitiesPage.module.scss';
 
 const CitiesPages = () => {
   const citiesLocalStore = useMemo(() => new CitiesLocalStore(), []);

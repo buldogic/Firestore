@@ -1,11 +1,11 @@
-@import './styles/colorMixin.scss';
-@import './styles/styles.css';
+@import "./styles/colorMixin.scss";
+@import "./styles/styles.css";
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: #FAFAFA;
+  background-color: #fafafa;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,14 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-
 a {
   text-decoration: none;
   color: black;
 }
 
 .active {
-  color: $primary ;
+  color: $primary;
   cursor: default;
 }

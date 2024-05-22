@@ -1,2 +1,2 @@
-export { default } from './AddCityForm'
-export * from './AddCityForm'
+export { default } from './AddCityForm';
+export * from './AddCityForm';

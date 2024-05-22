@@ -68,7 +68,7 @@ const CityForm = (props: Props) => {
             label="Название Страны"
             rules={[{ required: true, message: 'Пожалуйста введите название страны!' }]}
           >
-            <Input  style={{ width: '100%' }} />
+            <Input style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item
@@ -95,9 +95,9 @@ const CityForm = (props: Props) => {
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
 
-          <Form.Item  className={styles.button} wrapperCol={{ offset: 12, span: 16 }}>
+          <Form.Item className={styles.button} wrapperCol={{ offset: 12, span: 16 }}>
             <Button type="primary" htmlType="submit">
-             {props.buttonTitle}
+              {props.buttonTitle}
             </Button>
           </Form.Item>
         </Form>

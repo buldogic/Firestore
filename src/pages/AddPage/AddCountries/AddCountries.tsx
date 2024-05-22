@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import TableCountries from './TableCountries';
 import { Button, Modal } from 'antd';
-import styles from './AddCountries.module.scss';
 import Loader from '../../../components/Loader';
 import AddCountryForm from './AddCountryForm';
 import { countryStoreAdmin } from './CountryStoreAdmin';
+import styles from './AddCountries.module.scss';
 
 const AddCountries = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,5 +1,4 @@
 import {
-  DocumentData,
   arrayRemove,
   arrayUnion,
   collection,
@@ -19,12 +18,10 @@ import { Country } from '../../utils/fieldType';
 type PrivateValue = '_meta' | '_country' | '_addUserCountryLikeMeta' | '_likeCountry';
 
 export default class LocalStoreCountry {
-
   private _country: Country | null = null;
   private _meta: Meta = Meta.initial;
   private _addUserCountryLikeMeta: Meta = Meta.initial;
-  private _likeCountry: boolean = false
-
+  private _likeCountry: boolean = false;
 
   constructor() {
     makeObservable<LocalStoreCountry, PrivateValue>(this, {
@@ -33,7 +30,7 @@ export default class LocalStoreCountry {
       _addUserCountryLikeMeta: observable,
       _likeCountry: observable,
       meta: computed,
-      country:computed,
+      country: computed,
       likeCountry: computed,
       addUserCountryLikeMeta: computed,
       getCountry: action,
@@ -42,7 +39,6 @@ export default class LocalStoreCountry {
       addUserCountryLike: action,
     });
   }
-
 
   get meta() {
     return this._meta;
@@ -79,8 +75,6 @@ export default class LocalStoreCountry {
     return this._addUserCountryLikeMeta;
   }
 
-
-
   getIsLikeCountry = async (id: string) => {
     const db = getFirestore(app);
 
@@ -113,6 +107,6 @@ export default class LocalStoreCountry {
 
   addCountryLike = async (id: number) => {
     const db = getFirestore(app);
-    await updateDoc(doc(db, 'countries', String(id)), { like: !this._likeCountry })
+    await updateDoc(doc(db, 'countries', String(id)), { like: !this._likeCountry });
   };
 }

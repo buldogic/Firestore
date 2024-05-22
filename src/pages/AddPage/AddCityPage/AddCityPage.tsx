@@ -3,10 +3,10 @@ import TableCities from './TableCities';
 import Loader from '../../../components/Loader';
 import { observer } from 'mobx-react-lite';
 import { cityStoreAdmin } from './CityStoreAdmin';
-import styles from './AddCityPage.module.scss';
 import { Button, Modal } from 'antd';
 import AddCityForm from './AddCityForm';
 import { countries } from '../../../store/CountriesStore';
+import styles from './AddCityPage.module.scss';
 
 const AddCityPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

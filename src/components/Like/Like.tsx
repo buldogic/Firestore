@@ -9,22 +9,20 @@ type Props = {
 };
 
 const Like = (props: Props) => {
-
-  const hendleClick = () =>{
-    if (props.onToggle === undefined) return
-    props.onToggle() 
-  }
+  const hendleClick = () => {
+    if (props.onToggle === undefined) return;
+    props.onToggle();
+  };
 
   return (
-    <div >
+    <div>
       <HeartFilled
         className={cn(props.like ? styles.buttonYesLike : styles.buttonNoLike)}
         type="primary"
-
         onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          hendleClick()
+          e.preventDefault();
+          e.stopPropagation();
+          hendleClick();
         }}
       />
     </div>

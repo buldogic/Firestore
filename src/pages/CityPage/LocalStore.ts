@@ -1,5 +1,4 @@
 import {
-  DocumentData,
   arrayRemove,
   arrayUnion,
   collection,
@@ -89,7 +88,7 @@ export default class LocalStore {
 
   addCityLike = async (id: number) => {
     const db = getFirestore(app);
-    await updateDoc(doc(db, 'cities', String(id)), { like: !this._like })
+    await updateDoc(doc(db, 'cities', String(id)), { like: !this._like });
   };
 
   getCity = async (id: number) => {

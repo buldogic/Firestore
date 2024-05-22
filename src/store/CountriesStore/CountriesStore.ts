@@ -89,7 +89,7 @@ export default class CountriesStore {
   };
 
   getLocalCountry = (id: number) => {
-    return this._countries.find((c) => c.id === id) ?? null
+    return this._countries.find((c) => c.id === id) ?? null;
   };
 }
 

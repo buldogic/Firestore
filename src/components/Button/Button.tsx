@@ -8,26 +8,20 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   /** Текст кнопки */
   children: React.ReactNode;
-
 };
 
 const Button: React.FC<ButtonProps> = (props: ButtonProps) => {
   const { loading, children, disabled, className, ...buttonProps } = props;
 
   return (
-      <button
-        {...buttonProps}
-        disabled={disabled || loading}
-        className={cn(
-          className,
-          loading && styles.loading,
-          disabled && styles.disabled,
-          styles.button,
-        )}
-      >
-        {loading && <Loader size={'s'} className={styles.loader} />}
-        {children}
-      </button>
+    <button
+      {...buttonProps}
+      disabled={disabled || loading}
+      className={cn(className, loading && styles.loading, disabled && styles.disabled, styles.button)}
+    >
+      {loading && <Loader size={'s'} className={styles.loader} />}
+      {children}
+    </button>
   );
 };
 

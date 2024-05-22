@@ -5,10 +5,9 @@ import { Meta } from '../../../../utils/meta';
 import { cityStoreAdmin } from '../CityStoreAdmin';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
-import styles from './СhangeCityForm.module.scss';
-
 import CityForm, { CityFormValues } from '../../../../components/Form/City/City';
 import { countries } from '../../../../store/CountriesStore';
+import styles from './СhangeCityForm.module.scss';
 
 const initialValues = {
   countryId: undefined,
@@ -67,13 +66,12 @@ const СhangeCityForm = (props: Props) => {
   return (
     <div className={styles.container}>
       <CityForm
-
         form={form}
         onFinish={onFinish}
         title={approveAdd(notification)}
         countries={countries.countries}
         initialValues={initialValues}
-        buttonTitle='Редактировать'
+        buttonTitle="Редактировать"
       />
     </div>
   );

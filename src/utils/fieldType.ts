@@ -5,15 +5,15 @@ export type FieldType = {
 };
 
 export type User = {
-  id:string,
-  name: string,
-  surname: string,
-  email: string,
-  country: string,
-  img: string,
-  like?: [],
-  likeCountry?:[]
-}
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  country: string;
+  img: string;
+  like?: [];
+  likeCountry?: [];
+};
 
 export type City = {
   id: number;
@@ -24,19 +24,19 @@ export type City = {
   population: number;
   sight: string;
   country: string;
-  like:boolean;
+  like: boolean;
 };
 
 export type Country = {
   name: string;
-  id:number;
+  id: number;
   description: string;
   population: number;
   img: string;
   like?: boolean;
-}
+};
 
-export type addCity ={
+export type addCity = {
   id: number;
   name: string;
   is_capital: boolean;
@@ -46,4 +46,4 @@ export type addCity ={
   sight: string;
   countryId: number;
   country: string;
-}
+};

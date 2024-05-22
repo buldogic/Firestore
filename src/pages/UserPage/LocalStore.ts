@@ -1,4 +1,4 @@
-import { collection, doc, getDocs, getFirestore, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
+import { collection, doc, getDocs, getFirestore, limit, query, updateDoc, where } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { City, Country, User } from '../../utils/fieldType';
 import app from '../../utils/firebase';
@@ -11,7 +11,7 @@ export default class LocalStore {
   private _user: User | null = null;
   private _updateUserMeta = Meta.initial;
   private _likeCity: City[] | null = null;
-  private _likeCountry: Country [] | null = null
+  private _likeCountry: Country[] | null = null;
 
   constructor() {
     makeObservable<LocalStore, PrivateValue>(this, {
@@ -22,7 +22,7 @@ export default class LocalStore {
       _likeCountry: observable,
       updateUserMeta: computed,
       likeCity: computed,
-      likeCountry:computed,
+      likeCountry: computed,
       user: computed,
       meta: computed,
       getUser: action,
@@ -78,7 +78,7 @@ export default class LocalStore {
       });
 
       this.getUserCityLike();
-      this.getUserCountryLike()
+      this.getUserCountryLike();
     }
   };
 

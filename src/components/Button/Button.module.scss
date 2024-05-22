@@ -1,5 +1,4 @@
-@import '../../styles/colorMixin.scss';
-
+@import "../../styles/colorMixin.scss";
 
 .button {
   height: 52px;
@@ -17,7 +16,9 @@
   text-align: center;
   color: $white;
   padding: 0px 20px;
-  transition: 0.2s ease-out opacity, 0.2s ease-out background-color;
+  transition:
+    0.2s ease-out opacity,
+    0.2s ease-out background-color;
 
   &:hover:not(:disabled):not(.loading) {
     background-color: $primary-hover;
@@ -31,7 +32,6 @@
     background-color: $primary-disabled;
   }
 }
-
 
 .loader {
   color: inherit;
