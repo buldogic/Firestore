@@ -34,13 +34,15 @@ const UserPage = () => {
     countries.getCountries();
   }, []);
 
-  if (localStore.user === null) return <Loader />;
+  if (localStore.user === null) return <div className={styles.containerLoader}><Loader /></div>;
 
   return (
     <div className={styles.root}>
       <div className={styles.goBack} onClick={goBack}>
         <LeftOutlined /> Назад{' '}
       </div>
+      <div className={styles.container}>
+
       <div className={styles.containerInfoProfile}>
         <div>
           {localStore.user.img ? (
@@ -52,6 +54,10 @@ const UserPage = () => {
         <div className={styles.containerInfo}>
           <div className={styles.textInfoGroup}>
             <p className={styles.row}>
+              <span>Почта: </span>
+              {localStore.user.email ?? 'Почта не указана'}
+            </p>
+            <p className={styles.row}>
               <span>Страна: </span> <span>{localStore.user.country ?? 'Страна не указана'}</span>
             </p>
             <p className={styles.row}>
@@ -61,23 +67,6 @@ const UserPage = () => {
             <p className={styles.row}>
               <span>Фамилия: </span>
               {localStore.user.surname ?? 'Фамилия не указана'}
-            </p>
-            <p className={styles.row}>
-              <span>Почта: </span>
-              {localStore.user.email ?? 'Почта не указана'}
-            </p>
-            <p className={styles.row}>
-              <span>Любимые города:</span>{' '}
-              <span>
-                {localStore.likeCity?.map((c, i) => (
-                  <React.Fragment key={c.id}>
-                    <>{i > 0 ? ', ' : ''}</>
-                    <Link className={styles.link} key={c.id} to={`city/${c.id}`}>
-                      {c.name}
-                    </Link>
-                  </React.Fragment>
-                )) ?? 'Любимых городов нет!'}
-              </span>
             </p>
           </div>
           <div>
@@ -89,10 +78,40 @@ const UserPage = () => {
             Выйти
           </Button>
         </div>
+      </div>
+      <div className={styles.containerLike}>
+      <p className={styles.row}>
+              <span>Любимые города:</span>{' '}
+              <span>
+                {localStore.likeCity?.map((c, i) => (
+                  <React.Fragment key={c.id}>
+                    <>{i > 0 ? ', ' : ''}</>
+                    <Link className={styles.link} key={c.id} to={`/city/${c.id}`}>
+                      {c.name}
+                    </Link>
+                  </React.Fragment>
+                )) ?? 'Любимых городов нет!'}
+              </span>
+            </p>
+            <p className={styles.row}>
+              <span>Любимые страны:</span>{' '}
+              <span>
+                {localStore.likeCountry?.map((c, i) => (
+                  <React.Fragment key={c.id}>
+                    <>{i > 0 ? ', ' : ''}</>
+                    <Link className={styles.link} key={c.id} to={`/countries/country/${c.id}`}>
+                      {c.name}
+                    </Link>
+                  </React.Fragment>
+                )) ?? 'Любимых стран нет!'}
+              </span>
+            </p>
+
+      </div>
+    </div>
         <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
           {authStore.session && <UpdateUser store={localStore} id={authStore.session.uid} onClose={handleCancel} />}
         </Modal>
-      </div>
     </div>
   );
 };

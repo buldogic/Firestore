@@ -1,16 +1,17 @@
 import { collection, doc, getDocs, getFirestore, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { City, User } from '../../utils/fieldType';
+import { City, Country, User } from '../../utils/fieldType';
 import app from '../../utils/firebase';
 import { Meta } from '../../utils/meta';
 
-type PrivateValue = '_meta' | '_user' | '_updateUserMeta' | '_likeCity';
+type PrivateValue = '_meta' | '_user' | '_updateUserMeta' | '_likeCity' | '_likeCountry';
 
 export default class LocalStore {
   private _meta: Meta = Meta.initial;
   private _user: User | null = null;
   private _updateUserMeta = Meta.initial;
   private _likeCity: City[] | null = null;
+  private _likeCountry: Country [] | null = null
 
   constructor() {
     makeObservable<LocalStore, PrivateValue>(this, {
@@ -18,13 +19,16 @@ export default class LocalStore {
       _likeCity: observable,
       _meta: observable,
       _user: observable,
+      _likeCountry: observable,
       updateUserMeta: computed,
       likeCity: computed,
+      likeCountry:computed,
       user: computed,
       meta: computed,
       getUser: action,
       updateUser: action,
       getUserCityLike: action,
+      getUserCountryLike: action,
     });
   }
 
@@ -38,6 +42,10 @@ export default class LocalStore {
 
   get likeCity() {
     return this._likeCity;
+  }
+
+  get likeCountry() {
+    return this._likeCountry;
   }
 
   updateUser = async (user: User) => {
@@ -70,6 +78,7 @@ export default class LocalStore {
       });
 
       this.getUserCityLike();
+      this.getUserCountryLike()
     }
   };
 
@@ -84,7 +93,20 @@ export default class LocalStore {
     });
     runInAction(() => {
       this._likeCity = response as City[];
-      console.log(this._likeCity)
+    });
+  };
+
+  getUserCountryLike = async () => {
+    if (this._user === null) return;
+    const db = getFirestore(app);
+    const q = query(collection(db, 'countries'), where('id', 'in', this._user.likeCountry));
+
+    const citySnapshot = await getDocs(q);
+    const response = citySnapshot.docs.map((doc) => {
+      return doc.data();
+    });
+    runInAction(() => {
+      this._likeCountry = response as City[];
     });
   };
 }

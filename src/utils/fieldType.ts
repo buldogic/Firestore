@@ -9,11 +9,10 @@ export type User = {
   name: string,
   surname: string,
   email: string,
-  // likeCity: [],
-  // likeCountry:[],
   country: string,
   img: string,
   like?: [],
+  likeCountry?:[]
 }
 
 export type City = {
@@ -34,6 +33,7 @@ export type Country = {
   description: string;
   population: number;
   img: string;
+  like?: boolean;
 }
 
 export type addCity ={

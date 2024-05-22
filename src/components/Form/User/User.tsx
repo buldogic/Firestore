@@ -85,6 +85,7 @@ const UserForm = (props: Props) => {
           <Form.Item
             label="Почта"
             name="email"
+            hidden
             rules={[{ required: true, message: 'Пожалуйста введите Почту!' }]}
           >
             <Input style={{ width: '100%' }} />

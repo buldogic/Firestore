@@ -61,7 +61,7 @@ const CountriesPage = () => {
             {localStoreCountries.countries.map((c: Country) => (
               <div className={styles.cardBlock} key={c.id}>
                 <Link to={`country/${c.id}`}>
-                  <Card className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
+                  <Card like={c.like} className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
                 </Link>
               </div>
             ))}

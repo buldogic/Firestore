@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { useState } from 'react';
 import {Form, FormProps} from 'antd';
 import { FieldType } from '../../../../utils/fieldType';
-import z from 'zod';
 import { Meta } from '../../../../utils/meta';
 import styles from './AddCountryForm.module.scss';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
@@ -10,23 +9,7 @@ import { observer } from 'mobx-react-lite';
 import { countryStoreAdmin } from '../CountryStoreAdmin';
 import Country, { CountryFormValues } from '../../../../components/Form/Country';
 
-const shemeCity = z.object({
-  name: z.string(),
-  description: z.string(),
-  img: z.string(),
-  population: z.number(),
-});
 
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 14 },
-  },
-};
 
 const initialValues = {
   name: '',

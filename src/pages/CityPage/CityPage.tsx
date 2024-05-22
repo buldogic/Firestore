@@ -34,8 +34,8 @@ const CityPage = () => {
   const handleLike = () => {
     if(!authStore._session) return 
     localStore.addUserCityLike(authStore._session.uid)
-    const parsedId = idSchema.safeParse(Number(id));
 
+    const parsedId = idSchema.safeParse(Number(id));
     if (parsedId.success) {
       localStore.addCityLike(parsedId.data);
     }
