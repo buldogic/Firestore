@@ -50,10 +50,6 @@ class AuthStore {
         id: user.uid,
         like: [],
         likeCountry: [],
-        name: '',
-        surname: '',
-        img: '',
-        country: '',
       });
     } catch (error) {
       console.error('Ошибка при добавлении пользователя в базу данных Firestore:', error);
