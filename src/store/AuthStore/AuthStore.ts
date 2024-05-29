@@ -41,10 +41,20 @@ class AuthStore {
   }
 
   addUser = async (user: undefined | null | User) => {
+    console.log(user);
     if (user === null || user === undefined) return;
     const db = getFirestore(app);
     try {
-      await setDoc(doc(db, 'users', user.uid), { email: user.email, id: user.uid });
+      await setDoc(doc(db, 'users', user.uid), {
+        email: user.email,
+        id: user.uid,
+        like: [],
+        likeCountry: [],
+        name: '',
+        surname: '',
+        img: '',
+        country: '',
+      });
     } catch (error) {
       console.error('Ошибка при добавлении пользователя в базу данных Firestore:', error);
     }
@@ -59,10 +69,10 @@ class AuthStore {
     signInWithEmailAndPassword(auth, dataLogin.email, dataLogin.password);
   };
 
-  handleRigister = (dataLogin: FormValue) => {
+  handleRigister = async (dataLogin: FormValue) => {
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, dataLogin.email, dataLogin.password);
-    this.addUser(auth.currentUser ?? null);
+    await createUserWithEmailAndPassword(auth, dataLogin.email, dataLogin.password);
+    this.addUser(auth.currentUser);
   };
 
   signOut = () => {

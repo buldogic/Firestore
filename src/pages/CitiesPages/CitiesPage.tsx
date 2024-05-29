@@ -68,7 +68,7 @@ const CitiesPages = () => {
             {citiesLocalStore.cities.map((c: City) => (
               <div className={styles.cardBlock} key={c.id}>
                 <Link to={`city/${c.id}`}>
-                  <Card like={c.like} className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
+                  <Card className={styles.card} title={c.name} image={c.img} subtitle={c.description} />
                 </Link>
               </div>
             ))}

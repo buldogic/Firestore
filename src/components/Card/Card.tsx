@@ -32,7 +32,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <div className={styles.cardImg}>
         <img className={styles.img} src={image} alt="Card" />
         <div className={styles.like}>
-          <HeartFilled className={cn(props.like ? styles.buttonYesLike : styles.buttonNoLike)} type="primary" />
+          {/* <HeartFilled className={cn(props.like ? styles.buttonYesLike : styles.buttonNoLike)} type="primary" /> */}
         </div>
       </div>
       <div className={styles.cardContent}>

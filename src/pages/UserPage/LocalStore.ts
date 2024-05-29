@@ -85,6 +85,7 @@ export default class LocalStore {
   getUserCityLike = async () => {
     if (this._user === null) return;
     const db = getFirestore(app);
+    if(this._user.like?.length === 0) return 
     const q = query(collection(db, 'cities'), where('id', 'in', this._user.like));
 
     const citySnapshot = await getDocs(q);
@@ -99,6 +100,7 @@ export default class LocalStore {
   getUserCountryLike = async () => {
     if (this._user === null) return;
     const db = getFirestore(app);
+    if(this._user.likeCountry?.length === 0) return 
     const q = query(collection(db, 'countries'), where('id', 'in', this._user.likeCountry));
 
     const citySnapshot = await getDocs(q);
