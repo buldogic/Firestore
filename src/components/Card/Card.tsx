@@ -2,7 +2,7 @@ import React from 'react';
 import Text from '../Text';
 import cn from 'classnames';
 import styles from './Card.module.scss';
-import Like from '../Like';
+import { HeartFilled } from '@ant-design/icons';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -21,6 +21,7 @@ export type CardProps = {
   onClick?: React.MouseEventHandler;
   /** Слот для действия */
   actionSlot?: React.ReactNode;
+  like?: boolean;
 };
 
 const Card: React.FC<CardProps> = (props: CardProps) => {
@@ -31,7 +32,7 @@ const Card: React.FC<CardProps> = (props: CardProps) => {
       <div className={styles.cardImg}>
         <img className={styles.img} src={image} alt="Card" />
         <div className={styles.like}>
-          <Like/>
+          {/* <HeartFilled className={cn(props.like ? styles.buttonYesLike : styles.buttonNoLike)} type="primary" /> */}
         </div>
       </div>
       <div className={styles.cardContent}>

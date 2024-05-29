@@ -4,7 +4,6 @@ import { Form } from 'antd';
 import { Meta } from '../../../../utils/meta';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
-import { countries } from '../../../../store/CountriesStore';
 import Country, { CountryFormValues } from '../../../../components/Form/Country';
 import { countryStoreAdmin } from '../CountryStoreAdmin';
 import styles from './ChangeCountryForm.module.scss';
@@ -44,7 +43,7 @@ const СhangeCityForm = (props: Props) => {
 
   const onFinish = useCallback(
     async (values: CountryFormValues) => {
-      await countryStoreAdmin.updateCountry({ ...values, id: props.id});
+      await countryStoreAdmin.updateCountry({ ...values, id: props.id });
       if (countryStoreAdmin.updateCityMeta === Meta.success) {
         setNotification(true);
         setTimeout(() => {
@@ -55,7 +54,7 @@ const СhangeCityForm = (props: Props) => {
         setNotification(false);
       }
     },
-    [ countryStoreAdmin, setNotification, props.onClose],
+    [countryStoreAdmin, setNotification, props.onClose],
   );
 
   return (
@@ -65,7 +64,7 @@ const СhangeCityForm = (props: Props) => {
         onFinish={onFinish}
         title={approveAdd(notification)}
         initialValues={initialValues}
-        buttonTitle='Редактировать'
+        buttonTitle="Редактировать"
       />
     </div>
   );

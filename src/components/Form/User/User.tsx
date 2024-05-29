@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Button, Checkbox, Form, FormInstance, FormProps, Input, InputNumber, Select } from 'antd';
+import { Button, Form, FormInstance, FormProps, Input, Select } from 'antd';
 import z from 'zod';
 import styles from './User.module.scss';
 import { Country, FieldType } from '../../../utils/fieldType';
@@ -47,7 +47,6 @@ type Props = {
 };
 
 const UserForm = (props: Props) => {
-
   const onFinish = async (values: unknown) => {
     const result = shemeCity.safeParse(values);
     if (!result.success) return;
@@ -81,10 +80,10 @@ const UserForm = (props: Props) => {
             </Select>
           </Form.Item>
 
-
           <Form.Item
             label="Почта"
             name="email"
+            hidden
             rules={[{ required: true, message: 'Пожалуйста введите Почту!' }]}
           >
             <Input style={{ width: '100%' }} />

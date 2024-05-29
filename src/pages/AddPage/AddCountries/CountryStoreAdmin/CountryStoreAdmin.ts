@@ -1,10 +1,26 @@
-import { collection, deleteDoc, doc, getDocs, getFirestore, limit, orderBy, query, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  limit,
+  orderBy,
+  query,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { Country } from '../../../../utils/fieldType';
 import app from '../../../../utils/firebase';
 import { Meta } from '../../../../utils/meta';
 
-type PrivateValue = '_createCountryMeta' | '_getCountriesMeta' | '_deleteCountryMeta' | '_countries' | '_updateCountryMeta';
+type PrivateValue =
+  | '_createCountryMeta'
+  | '_getCountriesMeta'
+  | '_deleteCountryMeta'
+  | '_countries'
+  | '_updateCountryMeta';
 
 export default class CountryStoreAdmin {
   private _countries: Country[] = [];
@@ -79,8 +95,8 @@ export default class CountryStoreAdmin {
   };
 
   getStoredCountry = (id: number) => {
-      return this._countries.find((c) => c.id === id) ?? null
-  }
+    return this._countries.find((c) => c.id === id) ?? null;
+  };
 
   get getCountriesMeta() {
     return this._getCountriesMeta;

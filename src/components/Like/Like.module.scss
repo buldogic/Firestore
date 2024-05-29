@@ -1,7 +1,5 @@
 @import "../../styles/colorMixin.scss";
 
-
-
 .buttonNoLike {
   font-size: 34px;
   color: $likeNo;
@@ -25,14 +23,14 @@
     transform: scale(1);
   }
 }
-  @keyframes pulseNo {
-    from {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.5);
-    }
-    to {
-      transform: scale(1);
-    }
+@keyframes pulseNo {
+  from {
+    transform: scale(1);
   }
+  50% {
+    transform: scale(1.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}

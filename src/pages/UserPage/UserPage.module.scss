@@ -1,28 +1,90 @@
 @import "../../styles/colorMixin.scss";
 
 .root {
-  padding: 48px;
-
-}
-
-.main {
+  max-width: 1000px;
   display: flex;
-  margin-left: 100px;
-  gap: 58px;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+
+  padding: 60px 200px;
+  color: $black;
+  background-color: $layout;
 }
+
+.container {
+  display: flex;
+  gap: 30px;
+}
+
+.containerLoader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.containerLike {
+  min-width: 600px;
+  display: flex;
+  padding: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1 solid $secondary;
+  background-color: $white;
+  border-radius: 10px;
+  gap: 24px;
+}
+
 .img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   background-color: $secondary;
 }
-.container {
-  width: 100%;
+.containerInfoProfile {
+  max-width: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 24px;
+  flex-grow: 1;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.containerInfo {
+  display: flex;
+  padding: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1 solid $secondary;
+  background-color: $white;
+  border-radius: 10px;
+  gap: 24px;
+}
+
+.textInfoGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 400px;
+  gap: 12px;
+}
+
+.link {
+  color: $primary;
+}
+
+.textTitle {
+  font-weight: 700;
 }
 
 .goBack {
@@ -41,4 +103,10 @@
   &:active {
     color: $primary-active;
   }
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { HeartFilled } from '@ant-design/icons';
 import cn from 'classnames';
 import styles from './Like.module.scss';
@@ -9,19 +9,21 @@ type Props = {
 };
 
 const Like = (props: Props) => {
-  const [like, setLike] = useState(false);
+  const hendleClick = () => {
+    if (props.onToggle === undefined) return;
+    props.onToggle();
+  };
 
-  // const { like, onToggle } = props;
   return (
-    <div >
+    <div>
       <HeartFilled
-        className={cn(like ? styles.buttonNoLike : styles.buttonYesLike)}
+        className={cn(props.like ? styles.buttonYesLike : styles.buttonNoLike)}
         type="primary"
-        // onClick={onToggle}
         onClick={(e) => {
-          e.preventDefault()
-          e.stopPropagation()
-          setLike(!like)}}
+          e.preventDefault();
+          e.stopPropagation();
+          hendleClick();
+        }}
       />
     </div>
   );

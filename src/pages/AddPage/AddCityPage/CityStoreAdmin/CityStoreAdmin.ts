@@ -9,7 +9,6 @@ import {
   query,
   setDoc,
   updateDoc,
-  where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { addCity } from '../../../../utils/fieldType';
@@ -22,11 +21,11 @@ export default class CityStoreAdmin {
   private _meta: Meta = Meta.initial;
   private _cities: addCity[] = [];
   private _updarteCityMeta = Meta.initial;
-  private _createCityMeta = Meta.initial
+  private _createCityMeta = Meta.initial;
 
   constructor() {
     makeObservable<CityStoreAdmin, PrivateValue>(this, {
-      _createCityMeta:observable,
+      _createCityMeta: observable,
       _meta: observable,
       _updarteCityMeta: observable,
       _cities: observable.shallow,
@@ -36,7 +35,6 @@ export default class CityStoreAdmin {
       meta: computed,
       createCity: action,
       getCities: action,
-      
     });
   }
 
@@ -65,8 +63,8 @@ export default class CityStoreAdmin {
     this.getCities();
   };
 
-  get createCityStore ()  {
-    return this._createCityMeta
+  get createCityStore() {
+    return this._createCityMeta;
   }
 
   getCities = async () => {

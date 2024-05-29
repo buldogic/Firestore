@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './UserPage.module.scss';
-import Button from '../../components/Button';
-import { LeftOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
+import { LeftOutlined, EditOutlined } from '@ant-design/icons';
 import { authStore } from '../../store/AuthStore';
 import user from '../../fonts/img/user.jpeg';
 import { observer } from 'mobx-react-lite';
@@ -11,6 +10,7 @@ import { Modal } from 'antd';
 import UpdateUser from './UpdateUser/UpdateUser';
 import { countries } from '../../store/CountriesStore';
 import Loader from '../../components/Loader';
+import styles from './UserPage.module.scss';
 
 const UserPage = () => {
   const localStore = useMemo(() => new LocalStore(), []);
@@ -34,7 +34,12 @@ const UserPage = () => {
     countries.getCountries();
   }, []);
 
-  if (localStore.user === null) return <Loader />;
+  if (localStore.user === null)
+    return (
+      <div className={styles.containerLoader}>
+        <Loader />
+      </div>
+    );
 
   return (
     <div className={styles.root}>
@@ -42,56 +47,74 @@ const UserPage = () => {
         <LeftOutlined /> Назад{' '}
       </div>
       <div className={styles.container}>
-        <div>
-          {localStore.user.img ? (
-            <img className={styles.img} src={localStore.user.img} alt="Avatar" />
-          ) : (
-            <img className={styles.img} src={user} alt="Avatar" />
-          )}
+        <div className={styles.containerInfoProfile}>
+          <div>
+            {localStore.user.img ? (
+              <img className={styles.img} src={localStore.user.img} alt="Avatar" />
+            ) : (
+              <img className={styles.img} src={user} alt="Avatar" />
+            )}
+          </div>
+          <div className={styles.containerInfo}>
+            <div className={styles.textInfoGroup}>
+              <p className={styles.row}>
+                <span>Почта: </span>
+                {localStore.user.email ?? 'Почта не указана'}
+              </p>
+              <p className={styles.row}>
+                <span>Страна: </span> <span>{localStore.user.country ?? 'Страна не указана'}</span>
+              </p>
+              <p className={styles.row}>
+                <span>Имя: </span>
+                {localStore.user.name ?? 'Имя не указано'}
+              </p>
+              <p className={styles.row}>
+                <span>Фамилия: </span>
+                {localStore.user.surname ?? 'Фамилия не указана'}
+              </p>
+            </div>
+            <div>
+              <Button className={styles.updateButton} type="primary" onClick={showModal} icon={<EditOutlined />} />
+            </div>
+          </div>
+          <div>
+            <Button type="primary" onClick={authStore.signOut}>
+              Выйти
+            </Button>
+          </div>
         </div>
-        <div>
-          <p>
+        <div className={styles.containerLike}>
+          <p className={styles.row}>
+            <span>Любимые города:</span>{' '}
             <span>
-              <b>Почта</b>
+              {localStore.likeCity?.map((c, i) => (
+                <React.Fragment key={c.id}>
+                  <>{i > 0 ? ', ' : ''}</>
+                  <Link className={styles.link} key={c.id} to={`/city/${c.id}`}>
+                    {c.name}
+                  </Link>
+                </React.Fragment>
+              )) ?? 'Любимых городов нет!'}
             </span>
-            : {localStore.user.email ?? 'Почта не указана'}
+          </p>
+          <p className={styles.row}>
+            <span>Любимые страны:</span>{' '}
+            <span>
+              {localStore.likeCountry?.map((c, i) => (
+                <React.Fragment key={c.id}>
+                  <>{i > 0 ? ', ' : ''}</>
+                  <Link className={styles.link} key={c.id} to={`/countries/country/${c.id}`}>
+                    {c.name}
+                  </Link>
+                </React.Fragment>
+              )) ?? 'Любимых стран нет!'}
+            </span>
           </p>
         </div>
-        <div>
-          <p>
-            {' '}
-            <span>
-              <b>Имя</b>
-            </span>
-            : {localStore.user.name ?? 'Имя не указано'}
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>
-              <b>Фамилия</b>
-            </span>
-            : {localStore.user.surname ?? 'Фамилия не указана'}
-          </p>
-        </div>
-        <div>
-          <p>
-            <span>
-              <b>Страна</b>
-            </span>
-            : {localStore.user.country ?? 'Страна не указана'}
-          </p>
-        </div>
-        <div>
-          <Button onClick={showModal}> Редактировать профиль</Button>
-        </div>
-        <div>
-          <Button onClick={authStore.signOut}>Выйти</Button>
-        </div>
-        <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
-          {authStore.session && <UpdateUser store={localStore} id={authStore.session.uid} onClose={handleCancel} />}
-        </Modal>
       </div>
+      <Modal width={'auto'} className={styles.modal} footer={null} open={isModalOpen} onCancel={handleCancel}>
+        {authStore.session && <UpdateUser store={localStore} id={authStore.session.uid} onClose={handleCancel} />}
+      </Modal>
     </div>
   );
 };

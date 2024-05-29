@@ -1,7 +1,7 @@
 import React from 'react';
 import FormAuth from '../../../components/Form';
 import styles from './SingUp.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { authStore } from '../../../store/AuthStore';
 
 const SungUp = () => {

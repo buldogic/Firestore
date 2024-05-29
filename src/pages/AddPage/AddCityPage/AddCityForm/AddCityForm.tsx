@@ -2,12 +2,12 @@ import React, { useCallback } from 'react';
 import { useState } from 'react';
 import { Meta } from '../../../../utils/meta';
 import { cityStoreAdmin } from '../CityStoreAdmin';
-import styles from './AddCityForm.module.scss';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { countries } from '../../../../store/CountriesStore';
 import { observer } from 'mobx-react-lite';
 import CityForm, { CityFormValues } from '../../../../components/Form/City/City';
 import { Form } from 'antd';
+import styles from './AddCityForm.module.scss';
 
 const initialValues = {
   countryId: undefined,
@@ -60,7 +60,7 @@ const AddCityForm = () => {
           title={approveAdd(notification)}
           countries={countries.countries}
           initialValues={initialValues}
-          buttonTitle='Добавить'
+          buttonTitle="Добавить"
         />
       </div>
     </>

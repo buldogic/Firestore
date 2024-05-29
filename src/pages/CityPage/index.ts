@@ -1,2 +1,2 @@
 export { default } from './CityPage';
-export * from './CityPage'
+export * from './CityPage';

@@ -1,2 +1,2 @@
-export { default } from "./CountriesPage"
-export * from './CountriesPage'
+export { default } from './CountriesPage';
+export * from './CountriesPage';

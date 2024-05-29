@@ -44,7 +44,6 @@ const AdminPage = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
-
   return (
     <Layout style={{ height: '100vh' }}>
       <Sider trigger={null} collapsible collapsed={collapsed}>

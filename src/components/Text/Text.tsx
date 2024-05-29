@@ -28,17 +28,9 @@ const Text: React.FC<TextProps> = (props: TextProps) => {
   const view = props.view ?? 'p-14';
   const weight = props.weight ?? 'normal';
 
-
-
   return (
     <Tag
-      className={cn(
-        className,
-        styles.root,
-        styles[weight],
-        styles[view],
-        styles[color]
-      )}
+      className={cn(className, styles.root, styles[weight], styles[view], styles[color])}
       style={{
         WebkitLineClamp: maxLines,
       }}

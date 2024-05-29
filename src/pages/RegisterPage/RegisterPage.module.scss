@@ -1,4 +1,4 @@
-@import '../../styles/colorMixin.scss';
+@import "../../styles/colorMixin.scss";
 
 .root {
   width: 100vw;
@@ -6,5 +6,4 @@
   display: flex;
   justify-content: center;
   background-color: $layout;
-
 }

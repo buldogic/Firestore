@@ -18,7 +18,7 @@
   position: relative;
 }
 
-.like{
+.like {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -36,7 +36,6 @@
   padding: 24px 12px;
   gap: 8px;
   min-height: 172px;
-
 }
 
 .cardActions {
@@ -49,4 +48,17 @@
 .card:hover {
   transition: ease-in-out 0.3s;
   box-shadow: 0px 0px 10px rgba(#000, 0.25);
+}
+
+.buttonNoLike {
+  font-size: 34px;
+  color: $likeNo;
+  transform: scale(1);
+  animation: pulseNo 1s ease-in-out;
+}
+.buttonYesLike {
+  font-size: 34px;
+  color: $likeYes;
+  transform: scale(1);
+  animation: pulseYes 1s ease-in-out;
 }

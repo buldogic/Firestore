@@ -1,16 +1,13 @@
-import React, { memo, useCallback, useEffect, useMemo } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { Form } from 'antd';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react-lite';
 import UserForm, { UserFormValues } from '../../../components/Form/User';
-import styles from './UpdateUser.module.scss';
 import { countries } from '../../../store/CountriesStore';
 import LocalStore from '../LocalStore';
 import { Meta } from '../../../utils/meta';
-
-import { User } from '../../../utils/fieldType';
-import { Store } from 'antd/es/form/interface';
+import styles from './UpdateUser.module.scss';
 
 const initialValues = {
   countryId: undefined,
@@ -24,7 +21,7 @@ const initialValues = {
 type Props = {
   id: string;
   onClose: () => void;
-  store: LocalStore,
+  store: LocalStore;
 };
 
 const approveAdd = (v: boolean | null) => {
@@ -63,8 +60,6 @@ const UpdateUser = (props: Props) => {
     },
     [countries, props.store, setNotification, props.onClose],
   );
-
-
 
   return (
     <div className={styles.container}>

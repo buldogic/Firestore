@@ -10,14 +10,14 @@ import {
   where,
 } from 'firebase/firestore';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { City } from '../../utils/fieldType';
+import { Country } from '../../utils/fieldType';
 import app from '../../utils/firebase';
 import { Meta } from '../../utils/meta';
 
 type PrivateValue = '_countries' | '_meta';
 
 export default class LocalStoreCountries {
-  private _countries: City[] = [];
+  private _countries: Country[] = [];
   private _meta: Meta = Meta.initial;
 
   query: string = '';
@@ -90,7 +90,7 @@ export default class LocalStoreCountries {
     if (response.length !== 0) {
       runInAction(() => {
         this._meta = Meta.success;
-        this._countries = response as City[];
+        this._countries = response as Country[];
       });
       return;
     }

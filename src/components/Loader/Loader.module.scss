@@ -1,6 +1,7 @@
+@import "../../styles/colorMixin.scss";
 .loader {
   box-sizing: border-box;
-  color: #518581;
+  color: $primary;
   animation: rotation 1s linear infinite;
 
   &.s {

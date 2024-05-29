@@ -10,9 +10,8 @@ export const useFilters = () => {
   const [isCapital, setIsCapital] = useIsCapital();
   const [search, setSearch] = useSearch();
 
-
   useEffect(() => {
-      setPage(0);
+    setPage(0);
   }, [JSON.stringify(countryIds), isCapital, search]);
 
   return {
