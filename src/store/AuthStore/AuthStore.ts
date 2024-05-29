@@ -41,7 +41,6 @@ class AuthStore {
   }
 
   addUser = async (user: undefined | null | User) => {
-    console.log(user);
     if (user === null || user === undefined) return;
     const db = getFirestore(app);
     try {
